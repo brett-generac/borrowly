@@ -11,10 +11,26 @@ class ProfileView extends Component {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    console.log(this.props);
+    const { user } = this.props;
+    this.setState({
+      loaded: true,
+      user
+    });
+  }
 
   render() {
-    return <div className="container">Profile</div>;
+    return (
+      <div className="main">
+        {this.state.loaded && (
+          <div className="container-no-map">
+            <h3>Howdy, {this.state.user.name}.</h3>
+            <p>You have {this.state.user.favors} favors.</p>
+          </div>
+        )}
+      </div>
+    );
   }
 }
 export default ProfileView;

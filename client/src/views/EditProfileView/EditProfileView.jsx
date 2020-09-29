@@ -14,7 +14,7 @@ class ProfileView extends Component {
   componentDidMount() {}
 
   render() {
-    return <div className="container">Profile</div>;
+    return <div className="main">Profile</div>;
   }
 }
 export default ProfileView;

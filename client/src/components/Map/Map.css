@@ -1,4 +1,13 @@
-.map {
-  height: 100px;
-  width: 100px;
+.map-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: calc(100% - 48rem);
+}
+
+#google-map {
+  height: 100vh;
+  position: sticky !important;
+  top: 0;
 }

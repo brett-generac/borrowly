@@ -16,6 +16,12 @@ thingRouter.get("/list", (req, res, next) => {
   const { coordinates, category } = req.query;
   const lng = coordinates[0];
   const lat = coordinates[1];
+  let categoryObject = {};
+  if (category) {
+    categoryObject = {
+      category
+    };
+  }
   Thing.find({
     location: {
       $near: {
@@ -23,11 +29,11 @@ thingRouter.get("/list", (req, res, next) => {
           type: "Point",
           coordinates: [lng, lat]
         },
-        $maxDistance: 100000
+        $maxDistance: 15000
       }
     }
   })
-    .find({ category: category })
+    .find(categoryObject)
     .find({ available: true })
     .then((things) => {
       res.json({ things });

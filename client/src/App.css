@@ -1,4 +1,19 @@
-.container {
-  margin-top: 10rem;
+* {
+  box-sizing: border-box;
+}
+
+.main {
+  margin: 60px 0 0 0;
+  display: flex;
   flex-direction: column;
+}
+
+.container-map {
+  width: 48rem;
+  padding: 1rem;
+}
+
+.container-no-map {
+  width: 50%;
+  justify-content: center;
 }

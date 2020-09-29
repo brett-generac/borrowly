@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./Map.css";
 
 class Map extends Component {
   constructor() {
@@ -17,25 +18,39 @@ class Map extends Component {
     mapScript.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places`;
     document.body.appendChild(mapScript);
     mapScript.addEventListener("load", () => {
-      const map = this.createMap();
-      // window.google.maps.event.addListener(map, "click", (event) => {
-      //   this.createMarker(event.latLng);
-      // });
-      // this.setState({
-      //   map
-      // });
+      this.createMap();
+      if (this.props.marker) {
+        this.setMarker();
+      } else if (this.props.markers) {
+        this.setMarkers();
+      } else {
+        window.google.maps.event.addListener(this.state.map, "click", (event) => {
+          this.clearMarkers();
+          this.createMarker(event.latLng);
+          this.props.handleMapClick(event.latLng);
+        });
+      }
     });
   }
 
   createMap() {
-    return new window.google.maps.Map(this.googleMapRef.current, {
-      zoom: 12,
+    let mapOptions = {
+      zoom: 4,
       center: {
-        lat: this.props.center[1],
-        lng: this.props.center[0]
+        lat: 39.83,
+        lng: -98.59
       },
       disableDefaultUI: true,
       gestureHandling: "greedy"
+    };
+    if (this.props.center) {
+      mapOptions.zoom = 12;
+      mapOptions.center.lat = this.props.center[1];
+      mapOptions.center.lng = this.props.center[0];
+    }
+    const map = new window.google.maps.Map(this.googleMapRef.current, mapOptions);
+    this.setState({
+      map
     });
   }
 
@@ -54,11 +69,36 @@ class Map extends Component {
   clearMarkers() {
     for (let marker of this.state.markers) {
       marker.setMap(null);
+      this.setState({
+        markers: []
+      });
     }
   }
 
+  setMarkers() {
+    for (let marker of this.props.markers) {
+      const coordinates = {
+        lat: marker.location.coordinates[1],
+        lng: marker.location.coordinates[0]
+      };
+      this.createMarker(coordinates);
+    }
+  }
+
+  setMarker() {
+    const coordinates = {
+      lat: this.props.marker.location.coordinates[1],
+      lng: this.props.marker.location.coordinates[0]
+    };
+    this.createMarker(coordinates);
+  }
+
   render() {
-    return <div id="google-map" ref={this.googleMapRef} style={{ width: "100%", height: "100vh" }} />;
+    return (
+      <div className="map-container">
+        <div id="google-map" ref={this.googleMapRef} />
+      </div>
+    );
   }
 }
 

@@ -9,6 +9,7 @@ import SignUpView from "./views/SignUpView/SignUpView";
 import ProfileView from "./views/ProfileView/ProfileView";
 import EditProfileView from "./views/EditProfileView/EditProfileView";
 import ListThingsView from "./views/ListThingsView/ListThingsView";
+import SingleThingView from "./views/SingleThingView/SingleThingView";
 import CreateThingView from "./views/CreateThingView/CreateThingView";
 import Navbar from "./components/Navbar/Navbar";
 import { loadMe } from "./services/auth";
@@ -20,8 +21,9 @@ class App extends Component {
     this.state = {
       loaded: false,
       user: null,
+      location: "",
       coordinates: [],
-      category: null
+      category: ""
     };
   }
 
@@ -53,8 +55,9 @@ class App extends Component {
       });
   };
 
-  handleLocationUpdate = (coordinates) => {
+  handleLocationUpdate = (location, coordinates) => {
     this.setState({
+      location,
       coordinates
     });
   };
@@ -92,24 +95,31 @@ class App extends Component {
               render={(props) => <SignInView {...props} handleUserUpdate={this.handleUserUpdate} exact />}
             />
             <Route
+              path="/things/list"
+              render={(props) => (
+                <ListThingsView
+                  {...props}
+                  location={this.state.location}
+                  coordinates={this.state.coordinates}
+                  category={this.state.category}
+                  exact
+                />
+              )}
+            />
+            <Route
               path="/things/create"
               render={(props) => <CreateThingView {...props} coordinates={this.state.coordinates} exact />}
             />
-            <Route
-              path="/things/list"
-              render={(props) => (
-                <ListThingsView {...props} coordinates={this.state.coordinates} category={this.state.category} exact />
-              )}
-            />
-            <Route path="/profile" render={(props) => <ProfileView {...props} exact />} />
+            <Route path="/things/:id" render={(props) => <SingleThingView {...props} exact />} />
+            <Route path="/profile" render={(props) => <ProfileView {...props} user={this.state.user} exact />} />
             <Route path="/profile/edit" render={(props) => <EditProfileView {...props} exact />} />
             <Route
               path="/"
               render={(props) => (
                 <HomeView
                   {...props}
-                  handleLocation={this.handleLocationUpdate}
-                  handleCategory={this.handleCategoryUpdate}
+                  handleLocationUpdate={this.handleLocationUpdate}
+                  handleCategoryUpdate={this.handleCategoryUpdate}
                   exact
                 />
               )}

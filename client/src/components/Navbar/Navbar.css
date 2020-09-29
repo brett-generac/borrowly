@@ -1,7 +1,12 @@
-.ly {
-  color: #ff8c00;
+.navbar {
+  height: 60px;
+  box-shadow: rgba(0, 0, 0 0.08) 0px 1px 12px;
 }
 
 .navbar-brand {
   font-weight: bold;
+}
+
+.ly {
+  color: #ff8c00;
 }
