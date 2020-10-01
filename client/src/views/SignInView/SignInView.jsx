@@ -35,37 +35,39 @@ class SignInView extends Component {
   render() {
     return (
       <div className="main">
-        <div className="container-no-map">
-          <form onSubmit={this.handleFormSubmit}>
-            <div className="form-group">
-              <label htmlFor="email-input">Email</label>
-              <input
-                className="form-control"
-                id="email-input"
-                type="email"
-                name="email"
-                placeholder="Your email"
-                value={this.state.email}
-                onChange={this.handleInputChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="input-password">Password</label>
-              <input
-                className="form-control"
-                id="input-password"
-                type="password"
-                name="password"
-                placeholder="Your password"
-                value={this.state.password}
-                onChange={this.handleInputChange}
-                required
-                minLength="6"
-              />
-            </div>
-            <button className="btn btn-primary">Sign In</button>
-          </form>
+        <div className="container-center">
+          <div className="center">
+            <form onSubmit={this.handleFormSubmit}>
+              <div className="form-group">
+                <label htmlFor="email-input">Email</label>
+                <input
+                  className="form-control"
+                  id="email-input"
+                  type="email"
+                  name="email"
+                  placeholder="Your email"
+                  required
+                  value={this.state.email}
+                  onChange={this.handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="input-password">Password</label>
+                <input
+                  className="form-control"
+                  id="input-password"
+                  type="password"
+                  name="password"
+                  placeholder="Your password"
+                  minLength="6"
+                  required
+                  value={this.state.password}
+                  onChange={this.handleInputChange}
+                />
+              </div>
+              <button className="btn btn-primary">Sign In</button>
+            </form>
+          </div>
         </div>
       </div>
     );

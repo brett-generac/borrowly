@@ -1,26 +1,21 @@
-.list-container {
-  /* min-height: calc(100vh - 80px); */
-}
-
-.wrapper {
-  display: flex;
-  flex-direction: row;
-}
-
 ul {
   list-style: none;
   padding-left: 0;
 }
 
-img {
+.card img {
   width: 8rem;
   border-radius: 12px;
   margin-right: 1rem;
 }
 
-h3,
-small,
-p {
+.card {
   color: black;
+  flex-direction: row;
+  padding: 1rem 0;
+  border: none;
+}
+
+a:hover {
   text-decoration: none;
 }

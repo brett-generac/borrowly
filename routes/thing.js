@@ -1,3 +1,5 @@
+"use strict";
+
 const express = require("express");
 const multer = require("multer");
 const cloudinary = require("cloudinary");
@@ -44,9 +46,10 @@ thingRouter.get("/list", (req, res, next) => {
     });
 });
 
-thingRouter.get("/:id", async (req, res, next) => {
+thingRouter.get("/:id", (req, res, next) => {
   const id = req.params.id;
   Thing.findById(id)
+    .populate("owner")
     .then((thing) => {
       res.json({ thing });
     })

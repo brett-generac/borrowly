@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import ReactDOMServer from "react-dom/server";
+import { getContent } from "./getContent";
 import "./Map.css";
 
 class Map extends Component {
@@ -81,7 +83,21 @@ class Map extends Component {
         lat: marker.location.coordinates[1],
         lng: marker.location.coordinates[0]
       };
-      this.createMarker(coordinates);
+      const mapMarker = new window.google.maps.Marker({
+        position: coordinates,
+        map: this.state.map,
+        title: marker.name
+      });
+      const content = getContent(marker);
+      const infoWindow = new window.google.maps.InfoWindow({
+        content
+      });
+      mapMarker.addListener("mouseover", () => {
+        infoWindow.open(this.state.map, mapMarker);
+      });
+      mapMarker.addListener("mouseout", () => {
+        infoWindow.close();
+      });
     }
   }
 
@@ -96,7 +112,7 @@ class Map extends Component {
   render() {
     return (
       <div className="map-container">
-        <div id="google-map" ref={this.googleMapRef} />
+        <div id="map" ref={this.googleMapRef} />
       </div>
     );
   }

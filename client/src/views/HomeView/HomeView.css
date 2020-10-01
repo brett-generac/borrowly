@@ -1,4 +1,8 @@
-section {
-  padding-top: 3rem;
-  width: 28rem;
+.nearby-form {
+  padding: 4rem 0;
+  width: 20rem;
+}
+
+h3 {
+  color: #ff8c00;
 }

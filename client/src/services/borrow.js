@@ -1,12 +1,18 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: `${process.env.REACT_APP_API_BASE_URL}/borrow`,
+  baseURL: `${process.env.REACT_APP_API_BASE_URL}/borrows`,
   withCredentials: true
 });
 
-export const loadBorrow = () => api.get("/").then((response) => response.data);
+export const loadMyBorrows = () => api.get("/my").then((response) => response.data);
 
-export const createBorrow = (body) => api.post(`/create`, body).then((response) => response.data);
+export const loadBorrowHistory = () => api.get("/history").then((response) => response.data);
 
-export const endBorrow = (id, body) => api.patch(`/${id}`, body).then((response) => response.data);
+export const createBorrow = (body) => api.post("/create", body).then((response) => response.data);
+
+export const approveBorrow = (body) => api.patch("/approve", body).then((response) => response.data);
+
+export const endBorrow = (body) => api.patch("/end", body).then((response) => response.data);
+
+//export const loadBorrow = (id) => api.get(`/${id}`).then((response) => response.data);

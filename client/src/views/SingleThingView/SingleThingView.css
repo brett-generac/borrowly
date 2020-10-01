@@ -1,0 +1,7 @@
+/* .single img {
+  width: 12rem;
+} */
+
+.single {
+  flex-direction: column;
+}

@@ -1,5 +1,5 @@
 .navbar {
-  height: 60px;
+  height: 4rem;
   box-shadow: rgba(0, 0, 0 0.08) 0px 1px 12px;
 }
 
@@ -7,6 +7,10 @@
   font-weight: bold;
 }
 
+#navbarDropdown {
+  width: 5rem;
+}
+
 .ly {
-  color: #ff8c00;
+  color: gray;
 }

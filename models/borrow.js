@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema(
   {
-    owner: {
+    lender: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true
     },
-    renter: {
+    borrower: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true
@@ -19,14 +19,15 @@ const schema = new mongoose.Schema(
     },
     active: {
       type: Boolean,
-      default: true
+      default: false
+    },
+    closed: {
+      type: Boolean,
+      default: false
     }
   },
   {
-    timestamps: {
-      createdAt: "startedAt",
-      updatedAt: "endedAt"
-    }
+    timestamps: true
   }
 );
 

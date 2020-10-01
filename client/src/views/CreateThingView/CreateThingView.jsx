@@ -7,7 +7,7 @@ export class CreateThingView extends Component {
   constructor() {
     super();
     this.state = {
-      category: "automotive",
+      category: "",
       name: "",
       description: "",
       photo: null,
@@ -55,7 +55,7 @@ export class CreateThingView extends Component {
   render() {
     return (
       <div className="main">
-        <div className="create-form">
+        <div className="container-side">
           <form method="POST" onSubmit={this.handleFormSubmit}>
             <div className="form-group">
               <label htmlFor="category-select">Category:</label>
@@ -118,10 +118,13 @@ export class CreateThingView extends Component {
                 onChange={this.handlePhotoChange}
               />
             </div>
-            <button className="btn btn-primary">Add thing</button>
+            <button className="btn btn-primary">Contribute</button>
           </form>
         </div>
         <Map center={this.props.coordinates} handleMapClick={this.handleMapClick} />
+        <div className="alert-container">
+          <div className="alert alert-dark">Click where folks can pick up the thing</div>
+        </div>
       </div>
     );
   }

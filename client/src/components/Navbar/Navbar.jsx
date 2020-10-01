@@ -1,12 +1,15 @@
 import React from "react";
 import "./Navbar.css";
+import Icon from "../../images/person.svg";
 import { Link } from "react-router-dom";
 
 const Navbar = (props) => {
   return (
     <nav className="navbar navbar-expand-md navbar-light bg-light fixed-top">
       <Link className="navbar-brand" to="/">
-        Borrow<span className="ly">ly</span>
+        <h3>
+          Borrow<span className="ly">ly</span>
+        </h3>
       </Link>
       <button
         className="navbar-toggler"
@@ -16,34 +19,31 @@ const Navbar = (props) => {
         aria-controls="navbarSupportedContent"
         aria-expanded="false"
         aria-label="Toggle navigation"
-      >
-        <span className="navbar-toggler-icon"></span>
-      </button>
+      ></button>
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav ml-auto">
           {(props.user && (
             <>
-              <li className="nav-item">
+              <li className="nav-item mr-5">
                 <Link className="nav-link" to="/things/create">
-                  Add Thing
+                  Contribute SomeThing
                 </Link>
               </li>
               <li className="nav-item dropdown">
                 <button
                   className="nav-link dropdown-toggle"
-                  href="#"
                   id="navbarDropdown"
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  Your Account
+                  <img src={Icon} alt="user icon" />
                 </button>
-                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                   <Link className="dropdown-item" to="/profile">
                     Profile
                   </Link>
-                  <Link className="dropdown-item" to="/">
+                  <Link className="dropdown-item" to="/history">
                     History
                   </Link>
                   <div className="dropdown-divider"></div>

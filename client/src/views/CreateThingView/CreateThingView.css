@@ -1,7 +1,11 @@
-.create-form {
-  width: 640px;
+.alert-container {
+  position: absolute;
+  bottom: 2vh;
+  right: 5%;
+  z-index: 1;
+  width: 100%;
 }
 
-.create-form form {
-  padding: 3rem;
+.alert {
+  float: right;
 }

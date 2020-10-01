@@ -1,8 +1,11 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import "./SingleThingView.css";
 import Map from "../../components/Map/Map";
 import { loadThing } from "../../services/thing";
+import { createBorrow } from "../../services/borrow";
 
-export class SingleThingView extends Component {
+class SingleThingView extends Component {
   constructor() {
     super();
     this.state = {
@@ -20,19 +23,40 @@ export class SingleThingView extends Component {
       });
     });
   }
+
+  handleFormSubmit = (event) => {
+    event.preventDefault();
+    const body = {
+      lender: this.state.thing.owner._id,
+      thing: this.state.thing._id
+    };
+    createBorrow(body).then(() => {
+      this.props.history.push("/profile");
+    });
+  };
+
   render() {
+    const { thing } = this.state;
     return (
       <div className="main">
-        {this.state.loaded && (
-          <>
-            <div className="container">
-              <h3>{this.state.thing.name}</h3>
-              <p>{this.state.thing.category}</p>
-              <h3>{this.state.thing.description}</h3>
+        <div className="container-side">
+          {this.state.loaded && (
+            <div className="side">
+              <div className="card single">
+                <img id="img" src={thing.photoUrl} className="card-img-top" alt={thing.name} />
+                <div className="card-body">
+                  <h5 className="card-title">{thing.name}</h5>
+                  <p className="card-text">{thing.description}</p>
+                  <p className="card-text">Being lended by {thing.owner.name}</p>
+                  <form onSubmit={this.handleFormSubmit}>
+                    <button className="btn btn-primary">Ask to Borrow</button>
+                  </form>
+                </div>
+              </div>
+              <Map center={thing.location.coordinates} marker={thing} />
             </div>
-            <Map center={this.state.thing.location.coordinates} marker={this.state.thing} />
-          </>
-        )}
+          )}
+        </div>
       </div>
     );
   }

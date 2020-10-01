@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import List from "../../components/List/List";
 //import { Link } from "react-router-dom";
-import { loadMyBorrows } from "../../services/borrow";
-import { approveBorrow } from "../../services/borrow";
-import { endBorrow } from "../../services/borrow";
+import { loadBorrowHistory } from "../../services/borrow";
 
-class ProfileView extends Component {
+class HistoryView extends Component {
   constructor() {
     super();
     this.state = {
@@ -17,7 +15,7 @@ class ProfileView extends Component {
   }
 
   componentDidMount() {
-    loadMyBorrows().then((data) => {
+    loadBorrowHistory().then((data) => {
       this.setState({
         loaded: true,
         borrows: data.borrows,
@@ -25,37 +23,6 @@ class ProfileView extends Component {
       });
     });
   }
-
-  handleApproveSubmit = (event, id) => {
-    event.preventDefault();
-    const body = {
-      id
-    };
-    approveBorrow(body).then((data) => {
-      const { lend } = data;
-      const lends = [...this.state.lends];
-      const index = lends.findIndex((element) => element._id === lend._id);
-      lends[index] = lend;
-      this.setState({
-        lends
-      });
-    });
-  };
-
-  handleEndSubmit = (event, id) => {
-    event.preventDefault();
-    const body = {
-      id
-    };
-    endBorrow(body).then((data) => {
-      const lends = [...this.state.lends];
-      const index = lends.findIndex((element) => element._id === data.lend._id);
-      lends.splice(index);
-      this.setState({
-        lends
-      });
-    });
-  };
 
   render() {
     const favors = this.props.user.favors === 1 ? "favor" : "favors";
@@ -68,9 +35,9 @@ class ProfileView extends Component {
               <p>
                 You have {this.props.user.favors} {favors} left.
               </p>
-              <h3>Things you're borrowing</h3>
+              <h3>Things you borrowed</h3>
               <List borrows={this.state.borrows} />
-              <h3>Things you're lending</h3>
+              <h3>Things you lended</h3>
               <List
                 lends={this.state.lends}
                 handleApproveSubmit={this.handleApproveSubmit}
@@ -83,4 +50,4 @@ class ProfileView extends Component {
     );
   }
 }
-export default ProfileView;
+export default HistoryView;
