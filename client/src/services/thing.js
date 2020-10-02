@@ -5,6 +5,8 @@ const api = axios.create({
   withCredentials: true
 });
 
+export const loadMyThings = () => api.get("/my").then((response) => response.data);
+
 export const loadThing = (id) => api.get(`/${id}`).then((response) => response.data);
 
 export const loadThings = (coordinates, category) => {

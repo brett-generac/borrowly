@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import List from "../../components/List/List";
+import List from "../../components/List";
 //import { Link } from "react-router-dom";
 import { loadMyBorrows } from "../../services/borrow";
 import { approveBorrow } from "../../services/borrow";
@@ -10,7 +10,6 @@ class ProfileView extends Component {
     super();
     this.state = {
       loaded: false,
-      //things: null,
       borrows: null,
       lends: null
     };
@@ -33,9 +32,11 @@ class ProfileView extends Component {
     };
     approveBorrow(body).then((data) => {
       const { lend } = data;
+      const user = data.lender;
       const lends = [...this.state.lends];
       const index = lends.findIndex((element) => element._id === lend._id);
       lends[index] = lend;
+      this.props.handleUserUpdate(user);
       this.setState({
         lends
       });
@@ -60,11 +61,13 @@ class ProfileView extends Component {
   render() {
     const favors = this.props.user.favors === 1 ? "favor" : "favors";
     return (
-      <div className="main">
-        <div className="container-center">
+      <main>
+        <div className="container center">
           {this.state.loaded && (
-            <div className="center">
-              <h3>Howdy, {this.props.user.name}.</h3>
+            <div className="wrapper">
+              <h3>
+                Howdy, <span className="orange">{this.props.user.name}</span>.
+              </h3>
               <p>
                 You have {this.props.user.favors} {favors} left.
               </p>
@@ -79,7 +82,7 @@ class ProfileView extends Component {
             </div>
           )}
         </div>
-      </div>
+      </main>
     );
   }
 }

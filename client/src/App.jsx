@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import "./App.css";
+import "./styles/App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.min.js";
-import HomeView from "./views/HomeView/HomeView";
-import SignInView from "./views/SignInView/SignInView";
-import SignUpView from "./views/SignUpView/SignUpView";
-import ProfileView from "./views/ProfileView/ProfileView";
-import HistoryView from "./views/HistoryView/HistoryView";
-import EditProfileView from "./views/EditProfileView/EditProfileView";
-import ListThingsView from "./views/ListThingsView/ListThingsView";
-import SingleThingView from "./views/SingleThingView/SingleThingView";
-import CreateThingView from "./views/CreateThingView/CreateThingView";
-import Navbar from "./components/Navbar/Navbar";
+import HomeView from "./views/index/HomeView";
+import SignInView from "./views/auth/SignInView";
+import SignUpView from "./views/auth/SignUpView";
+import ProfileView from "./views/profile/ProfileView";
+import MyHistoryView from "./views/profile/MyHistoryView";
+import MyThingsView from "./views/profile/MyThingsView";
+import ListThingsView from "./views/things/ListThingsView";
+import SingleThingView from "./views/things/SingleThingView";
+import CreateThingView from "./views/things/CreateThingView";
+import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { loadMe } from "./services/auth";
 import { signOut } from "./services/auth";
@@ -93,6 +93,25 @@ class App extends Component {
         <BrowserRouter>
           <Navbar user={this.state.user} handleSignOut={this.handleSignOut} />
           <Switch>
+            <ProtectedRoute
+              path="/things/create"
+              render={(props) => <CreateThingView {...props} coordinates={this.state.coordinates} />}
+              authorized={this.state.user}
+              redirect="/auth/sign-in"
+              exact
+            />
+            <Route
+              path="/"
+              render={(props) => (
+                <HomeView
+                  {...props}
+                  handleCoordinatesUpdate={this.handleCoordinatesUpdate}
+                  handleLocationUpdate={this.handleLocationUpdate}
+                  handleCategoryUpdate={this.handleCategoryUpdate}
+                />
+              )}
+              exact
+            />
             <Route
               path="/auth/sign-up"
               render={(props) => <SignUpView {...props} handleUserUpdate={this.handleUserUpdate} exact />}
@@ -113,39 +132,29 @@ class App extends Component {
                 />
               )}
             />
-            <ProtectedRoute
-              path="/things/create"
-              render={(props) => <CreateThingView {...props} coordinates={this.state.coordinates} />}
-              authorized={this.state.user}
-              redirect="/auth/sign-in"
-              exact
-            />
             <Route path="/things/:id" render={(props) => <SingleThingView {...props} exact />} />
             <ProtectedRoute
               path="/profile"
-              render={(props) => <ProfileView {...props} user={this.state.user} />}
+              render={(props) => (
+                <ProfileView {...props} user={this.state.user} handleUserUpdate={this.handleUserUpdate} />
+              )}
               authorized={this.state.user}
               redirect="auth/sign-in"
               exact
             />
             <ProtectedRoute
-              path="/history"
-              render={(props) => <HistoryView {...props} user={this.state.user} />}
+              path="/profile/history"
+              render={(props) => <MyHistoryView {...props} user={this.state.user} />}
               authorized={this.state.user}
               redirect="auth/sign-in"
               exact
             />
-            <Route path="/profile/edit" render={(props) => <EditProfileView {...props} exact />} />
-            <Route
-              path="/"
-              render={(props) => (
-                <HomeView
-                  {...props}
-                  handleCoordinatesUpdate={this.handleCoordinatesUpdate}
-                  handleLocationUpdate={this.handleLocationUpdate}
-                  handleCategoryUpdate={this.handleCategoryUpdate}
-                />
-              )}
+            <ProtectedRoute
+              path="/profile/things"
+              render={(props) => <MyThingsView {...props} user={this.state.user} exact />}
+              authorized={this.state.user}
+              redirect="auth/sign-in"
+              exact
             />
           </Switch>
         </BrowserRouter>

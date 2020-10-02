@@ -1,0 +1,30 @@
+* {
+  box-sizing: border-box;
+}
+
+main {
+  margin-top: 4rem;
+  height: calc(100vh - 4rem);
+}
+
+.container {
+  padding-top: 4rem;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.wrapper {
+  width: 24rem;
+}
+
+.left {
+  padding: 2rem;
+  width: 48rem;
+}
+
+.orange {
+  color: #ff8c00;
+}

@@ -1,0 +1,34 @@
+#home-main::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  opacity: 0.8;
+  background-image: url("../images/background.jpeg");
+  background-size: cover;
+  background-position: center;
+}
+
+#top label {
+  color: white;
+  font-weight: bold;
+}
+
+#bottom {
+  margin-top: 4rem;
+  /* width: 24rem; */
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+}
+
+#bottom h3 {
+  color: #ff4c00;
+}
+
+#bottom p {
+  font-weight: 500;
+}

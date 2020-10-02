@@ -1,9 +1,8 @@
 export const getContent = (marker) => {
   return `
-    <div>
+    <div style="width: 5rem; height: 100%;">
       <img src=${marker.photoUrl} alt=${marker.name} style="width: 4rem;" />
-      <h3>${marker.name}</h3>
-      <a href="/things/${marker._id}">See Page</a>
+      <h5>${marker.name}</h5>
     </div>
   `;
 };

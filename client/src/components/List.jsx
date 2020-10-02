@@ -1,5 +1,5 @@
 import React from "react";
-import "./List.css";
+import "../styles/List.css";
 import { Link } from "react-router-dom";
 
 const List = (props) => {
@@ -51,7 +51,7 @@ const List = (props) => {
                   </>
                 )) || (
                   <>
-                    <p className="card-text">Pending your approval</p>
+                    <p className="card-text">Pending your approval to {lend.borrower.name}</p>
                     <form onSubmit={(event) => props.handleApproveSubmit(event, lend._id)}>
                       <button className="btn btn-primary">Approve Borrow</button>
                     </form>

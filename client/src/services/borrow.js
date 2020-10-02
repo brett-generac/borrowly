@@ -7,7 +7,7 @@ const api = axios.create({
 
 export const loadMyBorrows = () => api.get("/my").then((response) => response.data);
 
-export const loadBorrowHistory = () => api.get("/history").then((response) => response.data);
+export const loadMyHistory = () => api.get("/history").then((response) => response.data);
 
 export const createBorrow = (body) => api.post("/create", body).then((response) => response.data);
 

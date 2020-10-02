@@ -14,6 +14,17 @@ const upload = multer({ storage });
 
 const thingRouter = new express.Router();
 
+thingRouter.get("/my", routeGuard, (req, res, next) => {
+  Thing.find({ owner: req.user._id })
+    .then((things) => {
+      res.json({ things });
+    })
+    .catch((error) => {
+      console.log(error);
+      next(error);
+    });
+});
+
 thingRouter.get("/list", (req, res, next) => {
   const { coordinates, category } = req.query;
   const lng = coordinates[0];
@@ -84,29 +95,8 @@ thingRouter.post("/create", routeGuard, upload.single("photo"), (req, res, next)
     });
 });
 
-// thingRouter.patch("/:id", routeGuard, upload.single("photo"), (req, response, next) => {
-//   const id = req.params.id;
-//   const { category, name, description, photo, coordinates } = req.body;
-//   let data;
-//   let pic;
-//   if (!req.file) {
-//     pic = photo;
-//     data = { category, name, description, pic, coordinates };
-//   } else {
-//     pic = req.file.path;
-//     data = { category, name, description, pic, coordinates };
-//   }
-//   Thing.findByIdAndUpdate(id, data)
-//     .then((thing) => {
-//       response.json({ thing });
-//     })
-//     .catch((error) => {
-//       next(error);
-//     });
-// });
-
 thingRouter.delete("/:id", routeGuard, (req, res, next) => {
-  const id = req.params.id;
+  const id = req.body;
   Thing.findOneAndDelete({ _id: id })
     .then(() => {
       res.json({});

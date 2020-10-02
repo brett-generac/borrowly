@@ -2,6 +2,7 @@
 
 const express = require("express");
 const Borrow = require("../models/borrow");
+const User = require("../models/user");
 
 const borrowRouter = new express.Router();
 
@@ -77,13 +78,22 @@ borrowRouter.post("/create", (req, res, next) => {
 });
 
 borrowRouter.patch("/approve", (req, res, next) => {
-  const { id } = req.body;
-  Borrow.findByIdAndUpdate(id, { active: true }, { new: true })
+  let lend;
+  const borrowId = req.body.id;
+  Borrow.findByIdAndUpdate(borrowId, { active: true }, { new: true })
     .populate("lender")
     .populate("borrower")
     .populate("thing")
-    .then((lend) => {
-      res.json({ lend });
+    .then((document) => {
+      lend = document;
+      const borrowerId = document.borrower._id;
+      return User.findByIdAndUpdate(borrowerId, { $inc: { favors: -1 } });
+    })
+    .then(() => {
+      return User.findByIdAndUpdate(req.user._id, { $inc: { favors: 1 } }, { new: true });
+    })
+    .then((lender) => {
+      res.json({ lend, lender });
     })
     .catch((error) => {
       console.log(error);

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactDOMServer from "react-dom/server";
-import { getContent } from "./getContent";
-import "./Map.css";
+import { getContent } from "../services/content";
+import "../styles/Map.css";
 
 class Map extends Component {
   constructor() {
