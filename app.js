@@ -53,7 +53,7 @@ app.use(bindUserToViewLocals);
 
 //adding access headers to see if that is what's causing problem
 app.use((req, res, next) => {
-  res.header("Access-Control Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
