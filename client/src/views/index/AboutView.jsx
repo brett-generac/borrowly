@@ -27,20 +27,22 @@ const AboutView = (props) => {
                 </p>
                 {(props.user && (
                   <>
+                    <p>Start participating today.</p>
                     <p>
-                      <Link to="/">See what there is to borrow</Link>
+                      <Link to="/">Discover</Link> what the community has to borrow
                     </p>
                     <p>
-                      <Link to="/things/create">Contribute something to the community</Link>
+                      <Link to="/things/create">Contribute</Link> something to the community
                     </p>
                   </>
                 )) || (
                   <>
+                    <p>Join the community today.</p>
                     <p>
-                      <Link to="/sign-in">Sign-In if you have an account</Link>
+                      <Link to="/auth/sign-in">Sign-In</Link> if you have an account
                     </p>
                     <p>
-                      <Link to="/sign-up">Sign-Up if you don't</Link>
+                      <Link to="/auth/sign-up">Sign-Up</Link> if you don't have an account
                     </p>
                   </>
                 )}

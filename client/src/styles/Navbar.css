@@ -8,11 +8,11 @@
   padding: 1rem 0 0 1rem;
 }
 
-.dropdown small {
-  color: black;
-}
-
-.logo-navbar {
+#logo-navbar {
   height: 90%;
   margin-right: 1rem;
+}
+
+#greeting {
+  padding-right: 0.5rem;
 }

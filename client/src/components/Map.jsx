@@ -110,7 +110,7 @@ class Map extends Component {
 
   render() {
     return (
-      <div className="map-wrapper">
+      <div className="map-container">
         <div id="map" ref={this.googleMapRef} />
       </div>
     );
