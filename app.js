@@ -38,10 +38,9 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 60 * 60 * 24 * 15,
-      //changed sameSite from lax to none
-      sameSite: "lax",
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production"
+      //changed sameSite from lax to none, changed secure to always true, deleted httpOnly: true
+      sameSite: "none",
+      secure: true
     },
     store: new (connectMongo(expressSession))({
       mongooseConnection: mongoose.connection,
