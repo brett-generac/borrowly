@@ -19,6 +19,8 @@ const borrowRouter = require("./routes/borrow");
 
 const app = express();
 
+app.set("trust proxy", 1);
+
 app.use(logger("dev"));
 app.use(serveFavicon(join(__dirname, "public/images", "favicon.ico")));
 app.use(
@@ -35,6 +37,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 60 * 60 * 24 * 15,
+      //changed sameSite from lax to none
       sameSite: "lax",
       httpOnly: true,
       secure: process.env.NODE_ENV === "production"
@@ -59,7 +62,7 @@ app.use((req, res, next) => {
 });
 
 // Catch all error handler
-app.use((error, req, res, next) => {
+app.use((error, req, res) => {
   res.status(error.status || 500);
   res.json({ type: "error", error: { message: error.message } });
 });

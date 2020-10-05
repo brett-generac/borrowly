@@ -26,7 +26,7 @@ class SignUpView extends Component {
       .then((data) => {
         const { user } = data;
         this.props.handleUserUpdate(user);
-        this.props.history.push("/");
+        this.props.history.push("/about");
       })
       .catch((error) => {
         console.log(error);
@@ -36,7 +36,7 @@ class SignUpView extends Component {
     return (
       <main>
         <div className="container center">
-          <div className="wrapper">
+          <div className="form-wrapper">
             <section>
               <form onSubmit={this.handleFormSubmit}>
                 <div className="form-group">
@@ -79,7 +79,7 @@ class SignUpView extends Component {
                     onChange={this.handleInputChange}
                   />
                 </div>
-                <button className="btn btn-info">Sign Up</button>
+                <button className="btn btn-primary">Sign Up</button>
               </form>
             </section>
           </div>

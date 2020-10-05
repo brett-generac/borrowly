@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "../../styles/CreateThingView.css";
 import Map from "../../components/Map";
 import { createThing } from "../../services/thing";
 
@@ -54,12 +53,14 @@ export class CreateThingView extends Component {
 
   render() {
     return (
-      <main>
-        <div>
+      <main className="map-height">
+        <div className="map-container">
           <div className="left">
             <section>
               <form onSubmit={this.handleFormSubmit}>
-                <h3>Let folks borrow your unused thing</h3>
+                <h3>
+                  Let folks borrow your unused <span className="orange">thing</span>
+                </h3>
                 <hr />
                 <div className="form-group">
                   <label htmlFor="category-select">Category:</label>
@@ -112,8 +113,9 @@ export class CreateThingView extends Component {
                     onChange={this.handleInputChange}
                   />
                 </div>
+                <h5 className="orange">Click a spot on the map where folks can pick-up the thing</h5>
                 <div className="form-group">
-                  <label htmlFor="photo-input">Photo:</label>
+                  <label htmlFor="photo-input">Upload a photo of the thing:</label>
                   <input
                     className="form-control-file"
                     id="photo-input"
@@ -122,14 +124,11 @@ export class CreateThingView extends Component {
                     onChange={this.handlePhotoChange}
                   />
                 </div>
-                <button className="btn btn-info">Contribute</button>
+                <button className="btn btn-primary">Contribute</button>
               </form>
             </section>
           </div>
           <Map center={this.props.coordinates} handleMapClick={this.handleMapClick} />
-          <div className="alert-container">
-            <div className="alert alert-dark">Click the spot on the map where folks can pick up the thing</div>
-          </div>
         </div>
       </main>
     );

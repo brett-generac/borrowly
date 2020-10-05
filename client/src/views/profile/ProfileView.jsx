@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import List from "../../components/List";
-//import { Link } from "react-router-dom";
+import ProfileList from "../../components/ProfileList";
 import { loadMyBorrows } from "../../services/borrow";
 import { approveBorrow } from "../../services/borrow";
 import { endBorrow } from "../../services/borrow";
@@ -10,8 +9,8 @@ class ProfileView extends Component {
     super();
     this.state = {
       loaded: false,
-      borrows: null,
-      lends: null
+      borrows: [],
+      lends: []
     };
   }
 
@@ -30,17 +29,21 @@ class ProfileView extends Component {
     const body = {
       id
     };
-    approveBorrow(body).then((data) => {
-      const { lend } = data;
-      const user = data.lender;
-      const lends = [...this.state.lends];
-      const index = lends.findIndex((element) => element._id === lend._id);
-      lends[index] = lend;
-      this.props.handleUserUpdate(user);
-      this.setState({
-        lends
+    approveBorrow(body)
+      .then((data) => {
+        const { lend } = data;
+        const user = data.lender;
+        const lends = [...this.state.lends];
+        const index = lends.findIndex((element) => element._id === lend._id);
+        lends[index] = lend;
+        this.props.handleUserUpdate(user);
+        this.setState({
+          lends
+        });
+      })
+      .catch((error) => {
+        console.log(error);
       });
-    });
   };
 
   handleEndSubmit = (event, id) => {
@@ -48,39 +51,50 @@ class ProfileView extends Component {
     const body = {
       id
     };
-    endBorrow(body).then((data) => {
-      const lends = [...this.state.lends];
-      const index = lends.findIndex((element) => element._id === data.lend._id);
-      lends.splice(index);
-      this.setState({
-        lends
+    endBorrow(body)
+      .then((data) => {
+        const lends = [...this.state.lends];
+        const index = lends.findIndex((element) => element._id === data.lend._id);
+        lends.splice(index);
+        this.setState({
+          lends
+        });
+      })
+      .catch((error) => {
+        console.log(error);
       });
-    });
   };
 
   render() {
     const favors = this.props.user.favors === 1 ? "favor" : "favors";
     return (
       <main>
-        <div className="container center">
-          {this.state.loaded && (
-            <div className="wrapper">
-              <h3>
-                Howdy, <span className="orange">{this.props.user.name}</span>.
-              </h3>
-              <p>
-                You have {this.props.user.favors} {favors} left.
-              </p>
-              <h3>Things you're borrowing</h3>
-              <List borrows={this.state.borrows} />
-              <h3>Things you're lending</h3>
-              <List
-                lends={this.state.lends}
-                handleApproveSubmit={this.handleApproveSubmit}
-                handleEndSubmit={this.handleEndSubmit}
-              />
-            </div>
-          )}
+        <div className="container">
+          <div className="center">
+            {(this.state.loaded && (
+              <div className="view-wrapper">
+                <h1>
+                  Howdy, <span className="orange">{this.props.user.name}</span>.
+                </h1>
+                <h5>
+                  You have <b>{this.props.user.favors}</b> <span className="orange">{favors}</span> left.
+                </h5>
+                <hr className="thick" />
+                <ProfileList
+                  borrows={this.state.borrows}
+                  lends={this.state.lends}
+                  handleApproveSubmit={this.handleApproveSubmit}
+                  handleEndSubmit={this.handleEndSubmit}
+                />
+              </div>
+            )) || (
+              <div className="view-wrapper">
+                <div className="loading">
+                  <h3>Loading...</h3>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </main>
     );

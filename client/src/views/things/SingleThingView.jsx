@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../../styles/SingleThingView.css";
 import Map from "../../components/Map";
-import { loadThing } from "../../services/thing";
+import { deleteThing, loadThing } from "../../services/thing";
 import { createBorrow } from "../../services/borrow";
 
 class SingleThingView extends Component {
@@ -23,7 +23,21 @@ class SingleThingView extends Component {
     });
   }
 
-  handleFormSubmit = (event) => {
+  handleDeleteSubmit = (event) => {
+    event.preventDefault();
+    const body = {
+      id: this.state.thing._id
+    };
+    deleteThing(body)
+      .then(() => {
+        this.props.history.push("/things/list");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  handleBorrowSubmit = (event) => {
     event.preventDefault();
     const body = {
       lender: this.state.thing.owner._id,
@@ -36,9 +50,14 @@ class SingleThingView extends Component {
 
   render() {
     const { thing } = this.state;
+    const { user } = this.props;
+    let owner = false;
+    if (thing && user && thing.owner._id === user._id) {
+      owner = true;
+    }
     return (
       <main>
-        {this.state.loaded && (
+        {(this.state.loaded && (
           <div>
             <div className="left">
               <section id="single">
@@ -49,14 +68,28 @@ class SingleThingView extends Component {
                       {thing.name} for borrow from {thing.owner.name}
                     </h5>
                     <p className="card-text">{thing.description}</p>
-                    <form onSubmit={this.handleFormSubmit}>
-                      <button className="btn btn-info">Ask to Borrow</button>
-                    </form>
+                    {owner && (
+                      <form onSubmit={this.handleDeleteSubmit}>
+                        <button className="btn btn-danger">Delete Thing</button>
+                      </form>
+                    )}
+                    {!owner && user && (
+                      <form onSubmit={this.handleBorrowSubmit}>
+                        <button className="btn btn-info">Ask to Borrow</button>
+                      </form>
+                    )}
+                    {!user && <p className="card-text">Sign-in to borrow this thing</p>}
                   </div>
                 </div>
               </section>
             </div>
             <Map center={thing.location.coordinates} marker={thing} />
+          </div>
+        )) || (
+          <div className="view-wrapper">
+            <div className="loading">
+              <h3>Loading...</h3>
+            </div>
           </div>
         )}
       </main>

@@ -1,12 +1,15 @@
 .map-container {
-  position: fixed;
+}
+
+.map-wrapper {
+  position: sticky;
   top: 0;
-  right: 0;
+  right: auto;
   bottom: 0;
-  left: auto;
+  left: 48rem;
   width: calc(100% - 48rem);
 }
 
 #map {
-  height: 100vh;
+  height: calc(100vh - 4rem);
 }

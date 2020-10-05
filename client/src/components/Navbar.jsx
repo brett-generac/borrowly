@@ -1,13 +1,12 @@
 import React from "react";
 import "../styles/Navbar.css";
-import userIcon from "../images/user_icon.svg";
 import logo from "../images/logo.png";
 import { Link } from "react-router-dom";
 
 const Navbar = (props) => {
   return (
     <nav className="navbar navbar-expand-md navbar-light bg-light fixed-top">
-      <img id="logo" src={logo} alt="tree logo" />
+      <img className="logo-navbar" src={logo} alt="tree logo" />
       <Link className="navbar-brand" to="/">
         <h3>
           borrow<span className="orange">ly</span>
@@ -28,20 +27,20 @@ const Navbar = (props) => {
         <ul className="navbar-nav ml-auto">
           {(props.user && (
             <>
-              <li className="nav-item mr-5">
+              <li className="nav-item">
                 <Link className="nav-link" to="/things/create">
                   Contribute a Thing
                 </Link>
               </li>
               <li className="nav-item dropdown">
                 <button
-                  className="nav-link dropdown-toggle"
+                  className="dropdown-toggle"
                   id="navbarDropdown"
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  <img src={userIcon} alt="user icon" />
+                  <span>Hi, {props.user.name}</span>
                 </button>
                 <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                   <Link className="dropdown-item" to="/profile">
@@ -59,6 +58,11 @@ const Navbar = (props) => {
                   </button>
                 </div>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/about">
+                  About
+                </Link>
+              </li>
             </>
           )) || (
             <>
@@ -70,6 +74,11 @@ const Navbar = (props) => {
               <li className="nav-item">
                 <Link className="nav-link" to="/auth/sign-up">
                   Sign-Up
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/about">
+                  About
                 </Link>
               </li>
             </>

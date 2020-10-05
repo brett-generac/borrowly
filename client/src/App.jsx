@@ -1,18 +1,20 @@
 import React, { Component } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "./styles/App.css";
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap/dist/js/bootstrap.min.js";
+import ErrorHandler from "./components/ErrorHandler";
 import HomeView from "./views/index/HomeView";
+import AboutView from "./views/index/AboutView";
+import NotFoundView from "./views/index/NotFoundView";
 import SignInView from "./views/auth/SignInView";
 import SignUpView from "./views/auth/SignUpView";
 import ProfileView from "./views/profile/ProfileView";
 import MyHistoryView from "./views/profile/MyHistoryView";
 import MyThingsView from "./views/profile/MyThingsView";
-import ListThingsView from "./views/things/ListThingsView";
+import SearchThingsView from "./views/things/SearchThingsView";
 import SingleThingView from "./views/things/SingleThingView";
 import CreateThingView from "./views/things/CreateThingView";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { loadMe } from "./services/auth";
 import { signOut } from "./services/auth";
@@ -53,11 +55,6 @@ class App extends Component {
         console.log(error);
       });
   }
-  handleUserUpdate = (user) => {
-    this.setState({
-      user
-    });
-  };
 
   handleSignOut = () => {
     signOut()
@@ -67,6 +64,12 @@ class App extends Component {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  handleUserUpdate = (user) => {
+    this.setState({
+      user
+    });
   };
 
   handleLocationUpdate = (location) => {
@@ -89,74 +92,83 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div id="App">
         <BrowserRouter>
           <Navbar user={this.state.user} handleSignOut={this.handleSignOut} />
-          <Switch>
-            <ProtectedRoute
-              path="/things/create"
-              render={(props) => <CreateThingView {...props} coordinates={this.state.coordinates} />}
-              authorized={this.state.user}
-              redirect="/auth/sign-in"
-              exact
-            />
-            <Route
-              path="/"
-              render={(props) => (
-                <HomeView
-                  {...props}
-                  handleCoordinatesUpdate={this.handleCoordinatesUpdate}
-                  handleLocationUpdate={this.handleLocationUpdate}
-                  handleCategoryUpdate={this.handleCategoryUpdate}
-                />
-              )}
-              exact
-            />
-            <Route
-              path="/auth/sign-up"
-              render={(props) => <SignUpView {...props} handleUserUpdate={this.handleUserUpdate} exact />}
-            />
-            <Route
-              path="/auth/sign-in"
-              render={(props) => <SignInView {...props} handleUserUpdate={this.handleUserUpdate} exact />}
-            />
-            <Route
-              path="/things/list"
-              render={(props) => (
-                <ListThingsView
-                  {...props}
-                  location={this.state.location}
-                  coordinates={this.state.coordinates}
-                  category={this.state.category}
-                  exact
-                />
-              )}
-            />
-            <Route path="/things/:id" render={(props) => <SingleThingView {...props} exact />} />
-            <ProtectedRoute
-              path="/profile"
-              render={(props) => (
-                <ProfileView {...props} user={this.state.user} handleUserUpdate={this.handleUserUpdate} />
-              )}
-              authorized={this.state.user}
-              redirect="auth/sign-in"
-              exact
-            />
-            <ProtectedRoute
-              path="/profile/history"
-              render={(props) => <MyHistoryView {...props} user={this.state.user} />}
-              authorized={this.state.user}
-              redirect="auth/sign-in"
-              exact
-            />
-            <ProtectedRoute
-              path="/profile/things"
-              render={(props) => <MyThingsView {...props} user={this.state.user} exact />}
-              authorized={this.state.user}
-              redirect="auth/sign-in"
-              exact
-            />
-          </Switch>
+          <ErrorHandler>
+            <Switch>
+              <Route
+                path="/"
+                render={(props) => (
+                  <HomeView
+                    {...props}
+                    handleCoordinatesUpdate={this.handleCoordinatesUpdate}
+                    handleLocationUpdate={this.handleLocationUpdate}
+                    handleCategoryUpdate={this.handleCategoryUpdate}
+                  />
+                )}
+                exact
+              />
+              <Route path="/about" render={(props) => <AboutView {...props} user={this.state.user} />} exact />
+              <Route
+                path="/auth/sign-up"
+                render={(props) => <SignUpView {...props} handleUserUpdate={this.handleUserUpdate} exact />}
+              />
+              <Route
+                path="/auth/sign-in"
+                render={(props) => <SignInView {...props} handleUserUpdate={this.handleUserUpdate} exact />}
+              />
+              <ProtectedRoute
+                path="/things/create"
+                render={(props) => <CreateThingView {...props} coordinates={this.state.coordinates} />}
+                authorized={this.state.user}
+                redirect="/auth/sign-in"
+                exact
+              />
+              <Route
+                path="/things/list"
+                render={(props) => (
+                  <SearchThingsView
+                    {...props}
+                    user={this.state.user}
+                    location={this.state.location}
+                    coordinates={this.state.coordinates}
+                    category={this.state.category}
+                    exact
+                  />
+                )}
+              />
+              <Route
+                path="/things/:id"
+                render={(props) => <SingleThingView user={this.state.user} {...props} exact />}
+              />
+              <ProtectedRoute
+                path="/profile"
+                render={(props) => (
+                  <ProfileView {...props} user={this.state.user} handleUserUpdate={this.handleUserUpdate} />
+                )}
+                authorized={this.state.user}
+                redirect="/auth/sign-in"
+                exact
+              />
+              <ProtectedRoute
+                path="/profile/things"
+                render={(props) => <MyThingsView {...props} user={this.state.user} exact />}
+                authorized={this.state.user}
+                redirect="/auth/sign-in"
+                exact
+              />
+              <ProtectedRoute
+                path="/profile/history"
+                render={(props) => <MyHistoryView {...props} user={this.state.user} />}
+                authorized={this.state.user}
+                redirect="/auth/sign-in"
+                exact
+              />
+              <Route component={NotFoundView} />
+            </Switch>
+          </ErrorHandler>
+          <Footer />
         </BrowserRouter>
       </div>
     );

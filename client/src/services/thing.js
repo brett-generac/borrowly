@@ -38,4 +38,4 @@ export const editThing = (id, body) => {
   return api.patch(`/${id}`, body).then((response) => response.data);
 };
 
-export const deleteThing = (id) => api.delete(`/${id}`).then((response) => response.data);
+export const deleteThing = (body) => api.post("/delete", body).then((response) => response.data);

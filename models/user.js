@@ -18,7 +18,8 @@ const schema = new mongoose.Schema({
   },
   favors: {
     type: Number,
-    default: 1
+    default: 1,
+    min: 0
   }
 });
 

@@ -7,7 +7,7 @@
   left: 0;
   z-index: -1;
   opacity: 0.8;
-  background-image: url("../images/background.jpeg");
+  background-image: url("../images/home.jpeg");
   background-size: cover;
   background-position: center;
 }
@@ -19,7 +19,6 @@
 
 #bottom {
   margin-top: 4rem;
-  /* width: 24rem; */
   padding: 1rem;
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 10px;

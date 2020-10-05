@@ -1,0 +1,13 @@
+#about {
+  display: flex;
+  flex-direction: row;
+}
+
+#about-text {
+  margin-right: 4rem;
+}
+
+#picture {
+  width: 20rem;
+  border-radius: 10px;
+}

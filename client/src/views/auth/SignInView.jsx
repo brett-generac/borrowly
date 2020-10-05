@@ -36,7 +36,7 @@ class SignInView extends Component {
     return (
       <main>
         <div className="container center">
-          <div className="wrapper">
+          <div className="form-wrapper">
             <section>
               <form onSubmit={this.handleFormSubmit}>
                 <div className="form-group">
@@ -66,7 +66,7 @@ class SignInView extends Component {
                     onChange={this.handleInputChange}
                   />
                 </div>
-                <button className="btn btn-info">Sign In</button>
+                <button className="btn btn-primary">Sign In</button>
               </form>
             </section>
           </div>

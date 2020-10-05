@@ -48,6 +48,7 @@ export class HomeView extends Component {
         const lat = data.coords.latitude;
         const coordinates = [lng, lat];
         this.props.handleCoordinatesUpdate(coordinates);
+        this.props.handleCategoryUpdate(this.state.category);
         return getUserLocation(coordinates);
       })
       .then((data) => {
@@ -64,7 +65,7 @@ export class HomeView extends Component {
     return (
       <main id="home-main">
         <div className="container center">
-          <div className="wrapper">
+          <div className="form-wrapper">
             <section id="top">
               <form onSubmit={this.handleSearchSubmit}>
                 <div className="form-group">
@@ -106,7 +107,7 @@ export class HomeView extends Component {
                     onChange={this.handleInputChange}
                   />
                 </div>
-                <button className="btn btn-info">Search Things</button>
+                <button className="btn btn-primary">Search Things</button>
               </form>
             </section>
             <section id="bottom">
@@ -116,7 +117,7 @@ export class HomeView extends Component {
                 nearby have up for grabs.
               </p>
               <form onSubmit={this.handleNearbySubmit}>
-                <button className="btn btn-info">Nearby Things</button>
+                <button className="btn btn-primary">Nearby Things</button>
               </form>
             </section>
           </div>

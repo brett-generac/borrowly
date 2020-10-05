@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ReactDOMServer from "react-dom/server";
 import { getContent } from "../services/content";
 import "../styles/Map.css";
 
@@ -111,7 +110,7 @@ class Map extends Component {
 
   render() {
     return (
-      <div className="map-container">
+      <div className="map-wrapper">
         <div id="map" ref={this.googleMapRef} />
       </div>
     );

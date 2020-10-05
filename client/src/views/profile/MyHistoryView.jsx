@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import List from "../../components/List";
-//import { Link } from "react-router-dom";
+import HistoryList from "../../components/HistoryList";
 import { loadMyHistory } from "../../services/borrow";
 
 class MyHistoryView extends Component {
@@ -32,22 +31,28 @@ class MyHistoryView extends Component {
     }
     return (
       <main>
-        <div className="container center">
-          {this.state.loaded && (
-            <div className="wrapper">
-              <h3>
-                Howdy, <span className="orange">{this.props.user.name}</span>.
-              </h3>
-              <p>
-                You have lended {this.state.lends.length} {lendThings} and borrowed {this.state.borrows.length}{" "}
-                {borrowThings}.
-              </p>
-              <h3>Things you borrowed</h3>
-              <List borrows={this.state.borrows} />
-              <h3>Things you lended</h3>
-              <List lends={this.state.lends} />
-            </div>
-          )}
+        <div className="container">
+          <div className="center">
+            {(this.state.loaded && (
+              <div className="view-wrapper">
+                <h1>
+                  Howdy, <span className="orange">{this.props.user.name}</span>.
+                </h1>
+                <h5>
+                  You lended {this.state.lends.length} <span className="orange">{lendThings}</span> and borrowed{" "}
+                  {this.state.borrows.length} <span className="orange">{borrowThings}</span>.
+                </h5>
+                <hr className="thick" />
+                <HistoryList borrows={this.state.borrows} lends={this.state.lends} />
+              </div>
+            )) || (
+              <div className="view-wrapper">
+                <div className="loading">
+                  <h3>Loading...</h3>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </main>
     );

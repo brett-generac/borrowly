@@ -2,9 +2,26 @@
   box-sizing: border-box;
 }
 
+html {
+  font-size: 100%;
+}
+
+body {
+  font-size: 18px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal !important;
+}
+
 main {
   margin-top: 4rem;
-  height: calc(100vh - 4rem);
+  min-height: calc(100vh - 4rem);
 }
 
 .container {
@@ -16,8 +33,13 @@ main {
   justify-content: center;
 }
 
-.wrapper {
+.form-wrapper {
+  padding-top: 4rem;
   width: 24rem;
+}
+
+.view-wrapper {
+  width: 48rem;
 }
 
 .left {
@@ -25,6 +47,43 @@ main {
   width: 48rem;
 }
 
+.card-title {
+  font-weight: bold !important;
+}
+
+.no-data {
+  padding: 4rem 0;
+}
+
+.loading {
+  padding: 8rem 0;
+}
+
 .orange {
   color: #ff8c00;
+}
+
+.thick {
+  border: none;
+  height: 2px;
+  color: black;
+  background-color: black;
+}
+
+.huge {
+  font-size: 8rem;
+}
+
+.spaced {
+  padding-bottom: 2rem;
+}
+
+.signature {
+  display: flex;
+}
+
+.logo-gray {
+  height: 2rem;
+  margin-right: 1rem;
+  filter: grayscale(100%);
 }

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Map from "../../components/Map";
-import List from "../../components/List";
+import SearchList from "../../components/SearchList";
 import { loadThings } from "../../services/thing";
 
-export class ListThings extends Component {
+export class SearchThings extends Component {
   constructor() {
     super();
     this.state = {
@@ -23,23 +23,27 @@ export class ListThings extends Component {
   }
 
   render() {
-    const category = this.props.category ? `${this.props.category}` : "things";
-    const capCategory = category.charAt(0).toUpperCase() + category.slice(1);
     return (
       <main>
-        {this.state.loaded && (
+        {(this.state.loaded && (
           <div>
             <div className="left">
               <section>
-                <p>{this.state.things.length} things</p>
-                <h3>
-                  {capCategory} to borrow near {this.props.location}
-                </h3>
-                <hr />
-                <List things={this.state.things} />
+                <SearchList
+                  user={this.props.user}
+                  category={this.props.category}
+                  location={this.props.location}
+                  things={this.state.things}
+                />
               </section>
             </div>
             <Map center={this.props.coordinates} markers={this.state.things} />
+          </div>
+        )) || (
+          <div className="view-wrapper">
+            <div className="loading">
+              <h3>Loading...</h3>
+            </div>
           </div>
         )}
       </main>
@@ -47,4 +51,4 @@ export class ListThings extends Component {
   }
 }
 
-export default ListThings;
+export default SearchThings;

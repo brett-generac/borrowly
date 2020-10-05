@@ -57,6 +57,31 @@ thingRouter.get("/list", (req, res, next) => {
     });
 });
 
+thingRouter.post("/delete", (req, res, next) => {
+  const { id } = req.body;
+  Thing.findByIdAndDelete(id)
+    .then(() => {
+      res.json({ deleted: true });
+    })
+    .catch((error) => {
+      console.log(error);
+      next(error);
+    });
+});
+
+thingRouter.patch("/:id/edit", (req, res, next) => {
+  console.log("route edit hit");
+  // const id = req.params.id;
+  // Thing.findByIdAndUpdate(id)
+  //   .then(() => {
+  //     res.json({});
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //     next(error);
+  //   });
+});
+
 thingRouter.get("/:id", (req, res, next) => {
   const id = req.params.id;
   Thing.findById(id)
@@ -88,18 +113,6 @@ thingRouter.post("/create", routeGuard, upload.single("photo"), (req, res, next)
   })
     .then((document) => {
       res.json({ document });
-    })
-    .catch((error) => {
-      console.log(error);
-      next(error);
-    });
-});
-
-thingRouter.delete("/:id", routeGuard, (req, res, next) => {
-  const id = req.body;
-  Thing.findOneAndDelete({ _id: id })
-    .then(() => {
-      res.json({});
     })
     .catch((error) => {
       console.log(error);
