@@ -53,8 +53,8 @@ export class CreateThingView extends Component {
 
   render() {
     return (
-      <main className="map-height">
-        <div className="map-container">
+      <main>
+        <div>
           <div className="left">
             <section>
               <form onSubmit={this.handleFormSubmit}>
