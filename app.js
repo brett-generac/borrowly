@@ -29,6 +29,7 @@ app.use(
     credentials: true
   })
 );
+
 app.use(express.json());
 app.use(
   expressSession({
@@ -50,6 +51,13 @@ app.use(
 );
 app.use(basicAuthenticationDeserializer);
 app.use(bindUserToViewLocals);
+
+//adding access headers to see if that is what's causing problem
+app.use((req, res, next) => {
+  res.header("Access-Control Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 app.use("/", indexRouter);
 app.use("/auth", authRouter);

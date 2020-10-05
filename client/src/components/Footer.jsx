@@ -19,7 +19,7 @@ const Footer = (props) => {
             <h6>Links</h6>
             <ul className="footer-links">
               <li>
-                <a href="https://clockmakerbrett.tech/" target="_blank">
+                <a href="https://clockmakerbrett.tech/" target="_blank" rel="noopener noreferrer">
                   My Portfolio
                 </a>
               </li>
@@ -32,15 +32,19 @@ const Footer = (props) => {
             <h6>Profiles</h6>
             <ul className="footer-links">
               <li>
-                <a href="https://www.linkedin.com/in/brett-sherwood12/" target="_blank">
+                <a href="https://www.linkedin.com/in/brett-sherwood12/" target="_blank" rel="noopener noreferrer">
                   Linkedin
                 </a>
               </li>
               <li>
-                <a href="https://github.com/clockmakerbrett">GitHub</a>
+                <a href="https://github.com/clockmakerbrett" target="_blank" rel="noopener noreferrer">
+                  GitHub
+                </a>
               </li>
               <li>
-                <a href="https://www.instagram.com/brett_the_1_and_only/">Instagram</a>
+                <a href="https://www.instagram.com/brett_the_1_and_only/" target="_blank" rel="noopener noreferrer">
+                  Instagram
+                </a>
               </li>
             </ul>
           </div>
