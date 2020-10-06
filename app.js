@@ -1,14 +1,15 @@
-"use strict";
+//"use strict";
 
 const { join } = require("path");
 const express = require("express");
-const mongoose = require("mongoose");
-const connectMongo = require("connect-mongo");
-const expressSession = require("express-session");
-const cors = require("cors");
 const createError = require("http-errors");
 const logger = require("morgan");
+const cors = require("cors");
+const expressSession = require("express-session");
+const connectMongo = require("connect-mongo");
+const mongoose = require("mongoose");
 const serveFavicon = require("serve-favicon");
+
 const basicAuthenticationDeserializer = require("./middleware/basic-authentication-deserializer.js");
 const bindUserToViewLocals = require("./middleware/bind-user-to-view-locals.js");
 
@@ -16,6 +17,8 @@ const indexRouter = require("./routes/index");
 const authRouter = require("./routes/auth");
 const thingRouter = require("./routes/thing");
 const borrowRouter = require("./routes/borrow");
+
+const mongoStore = connectMongo(expressSession);
 
 const app = express();
 
@@ -37,12 +40,12 @@ app.use(
     resave: true,
     saveUninitialized: false,
     cookie: {
-      maxAge: 60 * 60 * 24 * 15,
+      maxAge: 60 * 60 * 24 * 15 * 1000,
       //changed sameSite from lax to none, changed secure to always true, deleted httpOnly: true
       sameSite: "none",
       secure: true
     },
-    store: new (connectMongo(expressSession))({
+    store: new mongoStore({
       mongooseConnection: mongoose.connection,
       ttl: 60 * 60 * 24
     })
@@ -50,13 +53,6 @@ app.use(
 );
 app.use(basicAuthenticationDeserializer);
 app.use(bindUserToViewLocals);
-
-//adding access headers to see if that is what's causing problem
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
 
 app.use("/", indexRouter);
 app.use("/auth", authRouter);
