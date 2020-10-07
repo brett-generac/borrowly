@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Map from "../../components/Map";
 import { createThing } from "../../services/thing";
 
-export class CreateThingView extends Component {
+class CreateThingView extends Component {
   constructor() {
     super();
     this.state = {
@@ -63,7 +63,7 @@ export class CreateThingView extends Component {
                 </h3>
                 <hr />
                 <div className="form-group">
-                  <label htmlFor="category-select">Category:</label>
+                  <label htmlFor="category-select">Category</label>
                   <select
                     className="form-control"
                     id="category-select"
@@ -90,7 +90,7 @@ export class CreateThingView extends Component {
                   </select>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="type-input">Name:</label>
+                  <label htmlFor="type-input">Name</label>
                   <input
                     className="form-control"
                     id="type-input"
@@ -102,7 +102,7 @@ export class CreateThingView extends Component {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="description-input">Description:</label>
+                  <label htmlFor="description-input">Description</label>
                   <textarea
                     className="form-control"
                     id="description-input"
@@ -115,7 +115,7 @@ export class CreateThingView extends Component {
                 </div>
                 <h5 className="orange">Click a spot on the map where folks can pick-up the thing</h5>
                 <div className="form-group">
-                  <label htmlFor="photo-input">Upload a photo of the thing:</label>
+                  <label htmlFor="photo-input">Upload a photo</label>
                   <input
                     className="form-control-file"
                     id="photo-input"

@@ -27,6 +27,7 @@ export const createThing = (body) => {
   for (let property in body) {
     formBody.append(property, body[property]);
   }
+  console.dir(formBody);
   return api.post("/create", formBody).then((response) => response.data);
 };
 
@@ -35,7 +36,8 @@ export const editThing = (id, body) => {
   for (let property in body) {
     formBody.append(property, body[property]);
   }
-  return api.patch(`/${id}`, body).then((response) => response.data);
+  console.dir(formBody);
+  return api.patch(`/${id}/edit`, formBody).then((response) => response.data);
 };
 
 export const deleteThing = (body) => api.post("/delete", body).then((response) => response.data);

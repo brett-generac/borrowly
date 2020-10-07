@@ -12,31 +12,29 @@ const ProfileList = (props) => {
           </h3>
           <ul>
             {props.borrows.map((borrow) => (
-              <>
+              <li key={borrow._id}>
                 <hr />
-                <li key={borrow._id}>
-                  <div className="card">
-                    <img src={borrow.thing.photoUrl} className="card-img-top" alt={borrow.thing.name} />
-                    <div className="card-body">
-                      <h5 className="card-title">{borrow.thing.name}</h5>
-                      {(borrow.active && <p className="card-text">Borrowing from {borrow.lender.name}</p>) || (
-                        <p className="card-text">Pending approval from {borrow.lender.name}</p>
-                      )}
-                    </div>
+                <div className="card">
+                  <img src={borrow.thing.photoUrl} className="card-img-top" alt={borrow.thing.name} />
+                  <div className="card-body">
+                    <h5 className="card-title">{borrow.thing.name}</h5>
+                    {(borrow.active && <p className="card-text">Borrowing from {borrow.lender.name}</p>) || (
+                      <p className="card-text">Pending approval from {borrow.lender.name}</p>
+                    )}
                   </div>
-                </li>
-              </>
+                </div>
+              </li>
             ))}
           </ul>
         </>
       )) || (
         <div className="no-data">
           <h3>
-            Looks like you aren't borrowing any<span className="orange">thing</span>
+            You aren't borrowing any<span className="orange">thing</span>
           </h3>
-          <Link to="/">
-            <h3>See what folks have up for grabs</h3>
-          </Link>
+          <h3>
+            <Link to="/">Discover</Link> what folks have up for grabs
+          </h3>
         </div>
       )}
       <hr className="thick" />
@@ -79,7 +77,7 @@ const ProfileList = (props) => {
       )) || (
         <div className="no-data">
           <h3>
-            Looks like you aren't lending any<span className="orange">thing</span>
+            You aren't lending any<span className="orange">thing</span>
           </h3>
         </div>
       )}

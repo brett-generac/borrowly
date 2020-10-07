@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import "../../styles/SingleThingView.css";
 import Map from "../../components/Map";
 import { deleteThing, loadThing } from "../../services/thing";
@@ -70,7 +71,12 @@ class SingleThingView extends Component {
                     <p className="card-text">{thing.description}</p>
                     {owner && (
                       <form onSubmit={this.handleDeleteSubmit}>
-                        <button className="btn btn-danger">Delete Thing</button>
+                        <button id="delete-button" className="btn btn-danger">
+                          Delete Thing
+                        </button>
+                        <Link className="btn btn-warning" to={`/things/${thing._id}/edit`}>
+                          Edit Thing
+                        </Link>
                       </form>
                     )}
                     {!owner && user && (

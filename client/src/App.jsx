@@ -11,8 +11,9 @@ import ProfileView from "./views/profile/ProfileView";
 import MyHistoryView from "./views/profile/MyHistoryView";
 import MyThingsView from "./views/profile/MyThingsView";
 import SearchThingsView from "./views/things/SearchThingsView";
-import SingleThingView from "./views/things/SingleThingView";
 import CreateThingView from "./views/things/CreateThingView";
+import EditThingView from "./views/things/EditThingView";
+import SingleThingView from "./views/things/SingleThingView";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -137,6 +138,10 @@ class App extends Component {
                     exact
                   />
                 )}
+              />
+              <Route
+                path="/things/:id/edit"
+                render={(props) => <EditThingView {...props} coordinates={this.state.coordinates} exact />}
               />
               <Route
                 path="/things/:id"

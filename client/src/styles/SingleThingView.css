@@ -6,3 +6,7 @@
   margin: 1rem;
   width: 22rem;
 }
+
+#delete-button {
+  margin-right: 1rem;
+}

@@ -34,11 +34,11 @@ const ThingList = (props) => {
       )) || (
         <div className="no-data">
           <h3>
-            Looks like you don't have any <span className="orange">things</span>
+            You don't have any <span className="orange">things</span>
           </h3>
-          <Link to="/things/create">
-            <h3>Want to change that?</h3>
-          </Link>
+          <h3>
+            <Link to="/things/create">Contribute</Link> something to change that!
+          </h3>
         </div>
       )}
     </div>

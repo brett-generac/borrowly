@@ -14,5 +14,3 @@ export const createBorrow = (body) => api.post("/create", body).then((response) 
 export const approveBorrow = (body) => api.patch("/approve", body).then((response) => response.data);
 
 export const endBorrow = (body) => api.patch("/end", body).then((response) => response.data);
-
-//export const loadBorrow = (id) => api.get(`/${id}`).then((response) => response.data);

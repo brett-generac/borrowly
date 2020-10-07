@@ -19,31 +19,29 @@ const List = (props) => {
           <hr className="thick" />
           <ul>
             {props.things.map((thing) => (
-              <>
-                <li key={thing._id}>
-                  <Link to={`/things/${thing._id}`}>
-                    <div className="card">
-                      <img src={thing.photoUrl} className="card-img-top" alt={thing.name} />
-                      <div className="card-body">
-                        <h5 className="card-title">{thing.name}</h5>
-                        <p className="card-text">{thing.description}</p>
-                      </div>
+              <li key={thing._id}>
+                <Link to={`/things/${thing._id}`}>
+                  <div className="card">
+                    <img src={thing.photoUrl} className="card-img-top" alt={thing.name} />
+                    <div className="card-body">
+                      <h5 className="card-title">{thing.name}</h5>
+                      <p className="card-text">{thing.description}</p>
                     </div>
-                  </Link>
-                </li>
+                  </div>
+                </Link>
                 <hr />
-              </>
+              </li>
             ))}
           </ul>
         </>
       )) || (
         <div className="no-data">
           <h3>
-            Looks like there aren't any <span className="orange">{category}</span> in {props.location}
+            There aren't any <span className="orange">{category}</span> to borrow near {props.location}
           </h3>
           {(props.user && (
             <h3>
-              <Link to="/things/create">Contribute a thing</Link> to change that!
+              <Link to="/things/create">Contribute</Link> something to change that!
             </h3>
           )) || (
             <h3>

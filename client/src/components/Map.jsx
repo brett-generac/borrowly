@@ -17,6 +17,7 @@ class Map extends Component {
   componentDidMount() {
     const mapScript = document.createElement("script");
     mapScript.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places`;
+    mapScript.id = "google-maps-api";
     document.body.appendChild(mapScript);
     mapScript.addEventListener("load", () => {
       this.createMap();
@@ -32,6 +33,11 @@ class Map extends Component {
         });
       }
     });
+  }
+
+  componentWillUnmount() {
+    const mapScript = document.getElementById("google-maps-api");
+    document.body.removeChild(mapScript);
   }
 
   createMap() {
