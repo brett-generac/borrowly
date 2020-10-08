@@ -23,6 +23,9 @@ const ThingList = (props) => {
                       <h5 className="card-title">{thing.name}</h5>
                       <form onSubmit={props.handleDeleteForm}>
                         <button className="btn btn-danger">Delete</button>
+                        <Link className="btn btn-warning" to={`/things/${thing._id}/edit`}>
+                          Edit
+                        </Link>
                       </form>
                     </div>
                   </div>

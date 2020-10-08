@@ -7,8 +7,7 @@ class Map extends Component {
     super();
     this.state = {
       map: null,
-      marker: null,
-      markers: []
+      marker: null
     };
   }
 
@@ -21,16 +20,29 @@ class Map extends Component {
     document.body.appendChild(mapScript);
     mapScript.addEventListener("load", () => {
       this.createMap();
-      if (this.props.marker) {
-        this.setMarker();
-      } else if (this.props.markers) {
-        this.setMarkers();
-      } else {
+      const addListener = () => {
         window.google.maps.event.addListener(this.state.map, "click", (event) => {
-          this.clearMarkers();
+          this.deleteMarker();
           this.createMarker(event.latLng);
           this.props.handleMapClick(event.latLng);
         });
+      };
+      switch (this.props.view) {
+        case "single":
+          this.setMarker();
+          break;
+        case "search":
+          this.setMarkers();
+          break;
+        case "edit":
+          this.setMarker();
+          addListener();
+          break;
+        case "create":
+          addListener();
+          break;
+        default:
+          this.setMarker();
       }
     });
   }
@@ -59,27 +71,6 @@ class Map extends Component {
     this.setState({
       map
     });
-  }
-
-  createMarker(coordinates) {
-    const marker = new window.google.maps.Marker({
-      position: coordinates,
-      map: this.state.map
-    });
-    const markers = [...this.state.markers];
-    markers.push(marker);
-    this.setState({
-      markers
-    });
-  }
-
-  clearMarkers() {
-    for (let marker of this.state.markers) {
-      marker.setMap(null);
-      this.setState({
-        markers: []
-      });
-    }
   }
 
   setMarkers() {
@@ -111,13 +102,35 @@ class Map extends Component {
       lat: this.props.marker.location.coordinates[1],
       lng: this.props.marker.location.coordinates[0]
     };
-    this.createMarker(coordinates);
+    const marker = new window.google.maps.Marker({
+      position: coordinates,
+      map: this.state.map
+    });
+    this.setState({
+      marker
+    });
+  }
+
+  createMarker(coordinates) {
+    const marker = new window.google.maps.Marker({
+      position: coordinates,
+      map: this.state.map
+    });
+    this.setState({
+      marker
+    });
+  }
+
+  deleteMarker() {
+    if (this.state.marker) {
+      this.state.marker.setMap(null);
+    }
   }
 
   render() {
     return (
       <div className="map-wrapper">
-        <div id="map" ref={this.googleMapRef} />
+        <div className="map" ref={this.googleMapRef} />
       </div>
     );
   }

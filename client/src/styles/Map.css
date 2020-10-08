@@ -1,6 +1,3 @@
-.map-container {
-}
-
 .map-wrapper {
   position: sticky;
   top: 0;
@@ -10,6 +7,17 @@
   width: calc(100% - 48rem);
 }
 
-#map {
+.map {
+  height: calc(100vh - 4rem);
+}
+
+.map-loading {
+  position: sticky;
+  top: 0;
+  right: auto;
+  bottom: 0;
+  left: 48rem;
+  width: calc(100% - 48rem);
+  background-color: lightgray;
   height: calc(100vh - 4rem);
 }

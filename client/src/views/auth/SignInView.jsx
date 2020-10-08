@@ -6,7 +6,8 @@ class SignInView extends Component {
     super();
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      error: null
     };
   }
 
@@ -29,6 +30,9 @@ class SignInView extends Component {
       })
       .catch((error) => {
         console.log(error);
+        this.setState({
+          error
+        });
       });
   };
 
@@ -36,8 +40,8 @@ class SignInView extends Component {
     return (
       <main>
         <div className="container center">
-          <div className="form-wrapper">
-            <section>
+          <div className="row form-wrapper">
+            <div className="col">
               <form onSubmit={this.handleFormSubmit}>
                 <div className="form-group">
                   <label htmlFor="email-input">Email</label>
@@ -68,7 +72,15 @@ class SignInView extends Component {
                 </div>
                 <button className="btn btn-primary">Sign In</button>
               </form>
-            </section>
+              {this.state.error && (
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  {this.state.error.message}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </main>

@@ -11,6 +11,12 @@ class ErrorHandler extends Component {
     };
   }
 
+  static getDerivedSateFromError(error) {
+    return {
+      catch: true
+    };
+  }
+
   //not being called for some reason, architecture and everything else is good if only promise catch blocks can throw errors up to this
   componentDidCatch(error, info) {
     this.setState({

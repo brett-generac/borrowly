@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "./styles/App.css";
-import ErrorHandler from "./components/ErrorHandler";
+import ErrorBoundary from "./components/ErrorBoundary";
 import HomeView from "./views/index/HomeView";
 import AboutView from "./views/index/AboutView";
 import NotFoundView from "./views/index/NotFoundView";
@@ -96,7 +96,7 @@ class App extends Component {
       <div id="App">
         <BrowserRouter>
           <Navbar user={this.state.user} handleSignOut={this.handleSignOut} />
-          <ErrorHandler>
+          <ErrorBoundary>
             <Switch>
               <Route
                 path="/"
@@ -172,7 +172,7 @@ class App extends Component {
               />
               <Route component={NotFoundView} />
             </Switch>
-          </ErrorHandler>
+          </ErrorBoundary>
           <Footer />
         </BrowserRouter>
       </div>

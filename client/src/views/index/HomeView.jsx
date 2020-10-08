@@ -65,8 +65,8 @@ export class HomeView extends Component {
     return (
       <main id="home-main">
         <div className="container center">
-          <div className="form-wrapper">
-            <section id="top">
+          <div id="top" className="row form-wrapper">
+            <div className="col">
               <form onSubmit={this.handleSearchSubmit}>
                 <div className="form-group">
                   <label htmlFor="category-select">Category</label>
@@ -109,17 +109,19 @@ export class HomeView extends Component {
                 </div>
                 <button className="btn btn-primary">Search Things</button>
               </form>
-            </section>
-            <section id="bottom">
-              <h3 id="sharing">Sharing Is Caring</h3>
-              <p>
-                Borrowly is a community for lending/borrowing things, no strings attached. Discover what the nice folks
-                nearby have up for grabs.
-              </p>
-              <form onSubmit={this.handleNearbySubmit}>
-                <button className="btn btn-primary">Nearby Things</button>
-              </form>
-            </section>
+            </div>
+            <div id="bottom" className="row">
+              <div className="col">
+                <h3 id="sharing">Sharing Is Caring</h3>
+                <p>
+                  Borrowly is a community for lending/borrowing things, no strings attached. Discover what the nice
+                  folks nearby have up for grabs.
+                </p>
+                <form onSubmit={this.handleNearbySubmit}>
+                  <button className="btn btn-primary">Nearby Things</button>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
       </main>

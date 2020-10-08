@@ -63,20 +63,22 @@ borrowRouter.get("/history", (req, res, next) => {
     });
 });
 
-borrowRouter.post("/create", (req, res, next) => {
+borrowRouter.post("/create", async (req, res, next) => {
   const { lender, thing } = req.body;
-  Borrow.create({
-    lender,
-    borrower: req.user._id,
-    thing
-  })
-    .then((document) => {
-      res.json({ document });
-    })
-    .catch((error) => {
-      console.log(error);
-      next(error);
-    });
+  try {
+    const user = await User.findById(req.user._id);
+    if (user.favors >= 1) {
+      Borrow.create({
+        lender,
+        borrower: req.user._id,
+        thing
+      });
+      res.json({ created: true });
+    }
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
 });
 
 borrowRouter.patch("/approve", (req, res, next) => {

@@ -36,8 +36,8 @@ class SignUpView extends Component {
     return (
       <main>
         <div className="container center">
-          <div className="form-wrapper">
-            <section>
+          <div className="row form-wrapper">
+            <div className="col">
               <form onSubmit={this.handleFormSubmit}>
                 <div className="form-group">
                   <label htmlFor="input-name">Name</label>
@@ -81,7 +81,7 @@ class SignUpView extends Component {
                 </div>
                 <button className="btn btn-primary">Sign Up</button>
               </form>
-            </section>
+            </div>
           </div>
         </div>
       </main>

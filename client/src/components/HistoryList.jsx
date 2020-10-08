@@ -65,9 +65,6 @@ const HistoryList = (props) => {
       )) || (
         <div className="no-data">
           <h3>You haven't lended anything</h3>
-          <h3>
-            <Link to="/things/create">Contribute</Link> something to the community
-          </h3>
         </div>
       )}
     </div>

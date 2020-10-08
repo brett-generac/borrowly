@@ -26,6 +26,7 @@ class EditThingView extends Component {
         const coordinates = data.thing.location.coordinates;
         this.setState({
           loaded: true,
+          thing: data.thing,
           category,
           name,
           description,
@@ -81,84 +82,88 @@ class EditThingView extends Component {
         {(this.state.loaded && (
           <div>
             <div className="left">
-              <section>
-                <form onSubmit={this.handleFormSubmit}>
-                  <h3>
-                    Edit your <span className="orange">thing</span>
-                  </h3>
-                  <hr />
-                  <div className="form-group">
-                    <label htmlFor="category-select">Edit category</label>
-                    <select
-                      className="form-control"
-                      id="category-select"
-                      name="category"
-                      value={this.state.category}
-                      onChange={this.handleInputChange}
-                    >
-                      <option value="art things">art things</option>
-                      <option value="athletic things">athletic things</option>
-                      <option value="auto things">auto things</option>
-                      <option value="clothing things">clothing things</option>
-                      <option value="collectible things">collectible things</option>
-                      <option value="electronic things">electronic things</option>
-                      <option value="equipment things">equipment things</option>
-                      <option value="furniture things">furniture things</option>
-                      <option value="household things">household things</option>
-                      <option value="music things">music things</option>
-                      <option value="media things">media things</option>
-                      <option value="recreation things">recreation things</option>
-                      <option value="tool things">tool things</option>
-                      <option value="toy things">toy things</option>
-                      <option value="yard things">yard things</option>
-                      <option value="other things">other things</option>
-                    </select>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="type-input">Edit name</label>
-                    <input
-                      className="form-control"
-                      id="type-input"
-                      type="text"
-                      name="name"
-                      value={this.state.name}
-                      onChange={this.handleInputChange}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="description-input">Edit description</label>
-                    <textarea
-                      className="form-control"
-                      id="description-input"
-                      type="text"
-                      name="description"
-                      value={this.state.description}
-                      onChange={this.handleInputChange}
-                    />
-                  </div>
-                  <h5 className="orange">Click the map to change location of the thing</h5>
-                  <img id="edit-img" src={this.state.photoUrl} alt={this.state.name} />
-                  <div className="form-group">
-                    <label htmlFor="photo-input">Edit photo</label>
-                    <input
-                      className="form-control-file"
-                      id="photo-input"
-                      type="file"
-                      name="photo"
-                      onChange={this.handlePhotoChange}
-                    />
-                  </div>
-                  <button className="btn btn-warning">Edit</button>
-                </form>
-              </section>
+              <form onSubmit={this.handleFormSubmit}>
+                <h3>
+                  Edit your <span className="orange">thing</span>
+                </h3>
+                <hr />
+                <div className="form-group">
+                  <label htmlFor="category-select">Edit category</label>
+                  <select
+                    className="form-control"
+                    id="category-select"
+                    name="category"
+                    value={this.state.category}
+                    onChange={this.handleInputChange}
+                  >
+                    <option value="art things">art things</option>
+                    <option value="athletic things">athletic things</option>
+                    <option value="auto things">auto things</option>
+                    <option value="clothing things">clothing things</option>
+                    <option value="collectible things">collectible things</option>
+                    <option value="electronic things">electronic things</option>
+                    <option value="equipment things">equipment things</option>
+                    <option value="furniture things">furniture things</option>
+                    <option value="household things">household things</option>
+                    <option value="music things">music things</option>
+                    <option value="media things">media things</option>
+                    <option value="recreation things">recreation things</option>
+                    <option value="tool things">tool things</option>
+                    <option value="toy things">toy things</option>
+                    <option value="yard things">yard things</option>
+                    <option value="other things">other things</option>
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="type-input">Edit name</label>
+                  <input
+                    className="form-control"
+                    id="type-input"
+                    type="text"
+                    name="name"
+                    value={this.state.name}
+                    onChange={this.handleInputChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="description-input">Edit description</label>
+                  <textarea
+                    className="form-control"
+                    id="description-input"
+                    type="text"
+                    name="description"
+                    value={this.state.description}
+                    onChange={this.handleInputChange}
+                  />
+                </div>
+                <h5 className="orange">Click the map to change location of the thing</h5>
+                <img id="edit-img" src={this.state.photoUrl} alt={this.state.name} />
+                <div className="form-group">
+                  <label htmlFor="photo-input">Edit photo</label>
+                  <input
+                    className="form-control-file"
+                    id="photo-input"
+                    type="file"
+                    name="photo"
+                    onChange={this.handlePhotoChange}
+                  />
+                </div>
+                <button className="btn btn-warning">Edit</button>
+              </form>
             </div>
-            <Map center={this.props.coordinates} handleMapClick={this.handleMapClick} />
+            <Map
+              view="edit"
+              center={this.state.thing.location.coordinates}
+              marker={this.state.thing}
+              handleMapClick={this.handleMapClick}
+            />
           </div>
         )) || (
-          <div className="view-wrapper">
-            <div className="loading">
-              <h3>Loading...</h3>
+          <div>
+            <div className="left">
+              <h3 className="loading">Loading...</h3>
             </div>
+            <div className="map-loading"></div>
           </div>
         )}
       </main>

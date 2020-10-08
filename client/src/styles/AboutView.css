@@ -1,13 +1,14 @@
-#about {
-  display: flex;
-  flex-direction: row;
-}
-
 #about-text {
-  margin-right: 4rem;
+  padding-right: 5rem;
 }
 
-#picture {
-  width: 20rem;
+#about-image {
+  width: 100%;
   border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  #about-image {
+    margin-top: 2rem;
+  }
 }

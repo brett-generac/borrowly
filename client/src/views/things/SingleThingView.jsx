@@ -61,41 +61,38 @@ class SingleThingView extends Component {
         {(this.state.loaded && (
           <div>
             <div className="left">
-              <section id="single">
-                <div id="single" className="card">
-                  <img id="img" src={thing.photoUrl} className="card-img-top" alt={thing.name} />
-                  <div className="card-body">
-                    <h5 className="card-title">
-                      {thing.name} for borrow from {thing.owner.name}
-                    </h5>
-                    <p className="card-text">{thing.description}</p>
-                    {owner && (
-                      <form onSubmit={this.handleDeleteSubmit}>
-                        <button id="delete-button" className="btn btn-danger">
-                          Delete Thing
-                        </button>
-                        <Link className="btn btn-warning" to={`/things/${thing._id}/edit`}>
-                          Edit Thing
-                        </Link>
-                      </form>
-                    )}
-                    {!owner && user && (
-                      <form onSubmit={this.handleBorrowSubmit}>
-                        <button className="btn btn-info">Ask to Borrow</button>
-                      </form>
-                    )}
-                    {!user && <p className="card-text">Sign-in to borrow this thing</p>}
-                  </div>
+              <div id="single" className="card">
+                <img id="img" src={thing.photoUrl} className="card-img-top" alt={thing.name} />
+                <div className="card-body">
+                  <h5 className="card-title">
+                    {thing.name} for borrow from {thing.owner.name}
+                  </h5>
+                  <p className="card-text">{thing.description}</p>
+                  {owner && (
+                    <form onSubmit={this.handleDeleteSubmit}>
+                      <button className="btn btn-danger">Delete Thing</button>
+                      <Link className="btn btn-warning" to={`/things/${thing._id}/edit`}>
+                        Edit Thing
+                      </Link>
+                    </form>
+                  )}
+                  {!owner && user && (
+                    <form onSubmit={this.handleBorrowSubmit}>
+                      <button className="btn btn-info">Ask to Borrow</button>
+                    </form>
+                  )}
+                  {!user && <p className="card-text">Sign-in to borrow this thing</p>}
                 </div>
-              </section>
+              </div>
             </div>
-            <Map center={thing.location.coordinates} marker={thing} />
+            <Map view="single" center={thing.location.coordinates} marker={thing} />
           </div>
         )) || (
-          <div className="view-wrapper">
-            <div className="loading">
-              <h3>Loading...</h3>
+          <div>
+            <div className="left">
+              <h3 className="loading">Loading...</h3>
             </div>
+            <div className="map-loading" />
           </div>
         )}
       </main>

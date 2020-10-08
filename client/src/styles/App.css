@@ -51,6 +51,14 @@ main {
   font-weight: bold !important;
 }
 
+.btn-danger {
+  margin-right: 1rem;
+}
+
+.alert {
+  margin-top: 2rem;
+}
+
 .no-data {
   padding: 4rem 0;
 }
@@ -74,8 +82,8 @@ main {
   font-size: 8rem;
 }
 
-.spaced {
-  padding-bottom: 2rem;
+.margin-bottom {
+  margin-bottom: 2rem;
 }
 
 .signature {

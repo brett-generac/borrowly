@@ -69,10 +69,10 @@ class ProfileView extends Component {
     const favors = this.props.user.favors === 1 ? "favor" : "favors";
     return (
       <main>
-        <div className="container">
-          <div className="center">
+        <div className="container view-wrapper">
+          <div className="row">
             {(this.state.loaded && (
-              <div className="view-wrapper">
+              <div className="col">
                 <h1>
                   Howdy, <span className="orange">{this.props.user.name}</span>.
                 </h1>
@@ -88,7 +88,7 @@ class ProfileView extends Component {
                 />
               </div>
             )) || (
-              <div className="view-wrapper">
+              <div className="col">
                 <div className="loading">
                   <h3>Loading...</h3>
                 </div>

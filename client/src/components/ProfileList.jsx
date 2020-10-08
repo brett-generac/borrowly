@@ -29,11 +29,9 @@ const ProfileList = (props) => {
         </>
       )) || (
         <div className="no-data">
+          <h3>You aren't borrowing anything</h3>
           <h3>
-            You aren't borrowing any<span className="orange">thing</span>
-          </h3>
-          <h3>
-            <Link to="/">Discover</Link> what folks have up for grabs
+            <Link to="/">Discover</Link> what there is to borrow
           </h3>
         </div>
       )}
@@ -76,9 +74,7 @@ const ProfileList = (props) => {
         </>
       )) || (
         <div className="no-data">
-          <h3>
-            You aren't lending any<span className="orange">thing</span>
-          </h3>
+          <h3>You aren't lending anything</h3>
         </div>
       )}
     </div>

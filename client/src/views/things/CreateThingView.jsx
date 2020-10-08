@@ -53,8 +53,8 @@ class CreateThingView extends Component {
 
   render() {
     return (
-      <main className="map-height">
-        <div className="map-container">
+      <main>
+        <div>
           <div className="left">
             <section>
               <form onSubmit={this.handleFormSubmit}>
@@ -128,7 +128,7 @@ class CreateThingView extends Component {
               </form>
             </section>
           </div>
-          <Map center={this.props.coordinates} handleMapClick={this.handleMapClick} />
+          <Map view="create" center={this.props.coordinates} handleMapClick={this.handleMapClick} />
         </div>
       </main>
     );

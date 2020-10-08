@@ -10,7 +10,6 @@ const createError = require("http-errors");
 const logger = require("morgan");
 const serveFavicon = require("serve-favicon");
 const basicAuthenticationDeserializer = require("./middleware/basic-authentication-deserializer.js");
-const bindUserToViewLocals = require("./middleware/bind-user-to-view-locals.js");
 
 const indexRouter = require("./routes/index");
 const authRouter = require("./routes/auth");
@@ -49,7 +48,6 @@ app.use(
   })
 );
 app.use(basicAuthenticationDeserializer);
-app.use(bindUserToViewLocals);
 
 app.use("/", indexRouter);
 app.use("/auth", authRouter);

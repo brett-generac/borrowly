@@ -28,22 +28,21 @@ export class SearchThings extends Component {
         {(this.state.loaded && (
           <div>
             <div className="left">
-              <section>
-                <SearchList
-                  user={this.props.user}
-                  category={this.props.category}
-                  location={this.props.location}
-                  things={this.state.things}
-                />
-              </section>
+              <SearchList
+                user={this.props.user}
+                category={this.props.category}
+                location={this.props.location}
+                things={this.state.things}
+              />
             </div>
-            <Map center={this.props.coordinates} markers={this.state.things} />
+            <Map view="search" center={this.props.coordinates} markers={this.state.things} />
           </div>
         )) || (
-          <div className="view-wrapper">
-            <div className="loading">
-              <h3>Loading...</h3>
+          <div>
+            <div className="left">
+              <h3 className="loading">Loading...</h3>
             </div>
+            <div className="map-loading"></div>
           </div>
         )}
       </main>
