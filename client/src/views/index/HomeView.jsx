@@ -9,7 +9,8 @@ export class HomeView extends Component {
     super();
     this.state = {
       category: "",
-      location: ""
+      location: "",
+      error: null
     };
   }
 
@@ -24,19 +25,26 @@ export class HomeView extends Component {
     event.preventDefault();
     getInputCoordinates(this.state.location)
       .then((data) => {
-        const lng = data.results[0].geometry.location.lng;
-        const lat = data.results[0].geometry.location.lat;
-        const location = data.results[0].address_components[0].long_name;
-        const coordinates = [lng, lat];
-        this.props.handleCoordinatesUpdate(coordinates);
-        this.props.handleLocationUpdate(location);
-        this.props.handleCategoryUpdate(this.state.category);
+        if (data.results[0]) {
+          const lng = data.results[0].geometry.location.lng;
+          const lat = data.results[0].geometry.location.lat;
+          const location = data.results[0].address_components[0].long_name;
+          const coordinates = [lng, lat];
+          this.props.handleCoordinatesUpdate(coordinates);
+          this.props.handleLocationUpdate(location);
+          this.props.handleCategoryUpdate(this.state.category);
+        } else {
+          throw new Error("No place found with that name");
+        }
       })
       .then(() => {
         this.props.history.push(`/things/list`);
       })
       .catch((error) => {
         console.log(error);
+        this.setState({
+          error
+        });
       });
   };
 
@@ -57,8 +65,17 @@ export class HomeView extends Component {
         this.props.history.push(`/things/list`);
       })
       .catch((error) => {
-        console.log(error);
+        this.setState({
+          error: error.response.data.error
+        });
       });
+  };
+
+  handleClearError = (event) => {
+    event.preventDefault();
+    this.setState({
+      error: null
+    });
   };
 
   render() {
@@ -124,6 +141,20 @@ export class HomeView extends Component {
             </div>
           </div>
         </div>
+        {this.state.error && (
+          <div className="error-center alert alert-danger alert-dismissible fade show" role="alert">
+            {this.state.error.message}
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={this.handleClearError}
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        )}
       </main>
     );
   }

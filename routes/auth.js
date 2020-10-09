@@ -32,7 +32,7 @@ router.post("/sign-in", (req, res, next) => {
   User.findOne({ email })
     .then((document) => {
       if (!document) {
-        return Promise.reject(new Error("There's no user with that email."));
+        throw new Error("No user found with that email.");
       } else {
         user = document;
         return bcryptjs.compare(password, user.passwordHash);
@@ -43,7 +43,7 @@ router.post("/sign-in", (req, res, next) => {
         req.session.user = user._id;
         res.json({ user });
       } else {
-        return Promise.reject(new Error("Wrong password."));
+        throw new Error("Wrong password.");
       }
     })
     .catch((error) => {
@@ -53,7 +53,7 @@ router.post("/sign-in", (req, res, next) => {
 
 router.post("/sign-out", (req, res) => {
   req.session.destroy();
-  res.json({});
+  res.json({ signedOut: true });
 });
 
 module.exports = router;

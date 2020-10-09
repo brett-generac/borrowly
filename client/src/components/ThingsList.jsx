@@ -12,25 +12,23 @@ const ThingList = (props) => {
           </h3>
           <ul>
             {props.things.map((thing) => (
-              <>
+              <li key={thing._id}>
                 <hr />
-                <li key={thing._id}>
-                  <div className="card">
-                    <Link to={`/things/${thing._id}`}>
-                      <img src={thing.photoUrl} className="card-img-top" alt={thing.name} />
-                    </Link>
-                    <div className="card-body">
-                      <h5 className="card-title">{thing.name}</h5>
-                      <form onSubmit={props.handleDeleteForm}>
-                        <button className="btn btn-danger">Delete</button>
-                        <Link className="btn btn-warning" to={`/things/${thing._id}/edit`}>
-                          Edit
-                        </Link>
-                      </form>
-                    </div>
+                <div className="card">
+                  <Link to={`/things/${thing._id}`}>
+                    <img src={thing.photoUrl} className="card-img-top" alt={thing.name} />
+                  </Link>
+                  <div className="card-body">
+                    <h5 className="card-title">{thing.name}</h5>
+                    <form onSubmit={props.handleDeleteForm}>
+                      <button className="btn btn-danger">Delete</button>
+                      <Link className="btn btn-warning" to={`/things/${thing._id}/edit`}>
+                        Edit
+                      </Link>
+                    </form>
                   </div>
-                </li>
-              </>
+                </div>
+              </li>
             ))}
           </ul>
         </>

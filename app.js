@@ -20,7 +20,7 @@ const app = express();
 
 app.set("trust proxy", 1);
 
-app.use(logger("dev"));
+//app.use(logger("dev"));
 app.use(serveFavicon(join(__dirname, "public/images", "favicon.ico")));
 app.use(
   cors({
@@ -60,9 +60,9 @@ app.use((req, res, next) => {
 });
 
 // Catch all error handler
-app.use((error, req, res) => {
+app.use((error, req, res, next) => {
   res.status(error.status || 500);
-  res.json({ type: "error", error: { message: error.message } });
+  res.json({ error: { message: error.message } });
 });
 
 module.exports = app;

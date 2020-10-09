@@ -27,7 +27,6 @@ export const createThing = (body) => {
   for (let property in body) {
     formBody.append(property, body[property]);
   }
-  console.dir(formBody);
   return api.post("/create", formBody).then((response) => response.data);
 };
 

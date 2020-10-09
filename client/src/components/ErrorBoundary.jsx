@@ -6,28 +6,19 @@ class ErrorHandler extends Component {
     super();
     this.state = {
       catch: false,
-      error: null,
-      info: null
+      error: null
     };
   }
 
-  static getDerivedSateFromError(error) {
-    return {
-      catch: true
-    };
-  }
-
-  //not being called for some reason, architecture and everything else is good if only promise catch blocks can throw errors up to this
-  componentDidCatch(error, info) {
+  componentDidCatch(error) {
     this.setState({
       catch: true,
-      error,
-      info
+      error
     });
   }
 
   render() {
-    return this.state.catch ? <ErrorView error={this.state.error} info={this.state.info} /> : this.props.children;
+    return this.state.catch ? <ErrorView error={this.state.error} /> : this.props.children;
   }
 }
 

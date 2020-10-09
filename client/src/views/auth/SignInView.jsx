@@ -31,9 +31,16 @@ class SignInView extends Component {
       .catch((error) => {
         console.log(error);
         this.setState({
-          error
+          error: error.response.data.error
         });
       });
+  };
+
+  handleClearError = (event) => {
+    event.preventDefault();
+    this.setState({
+      error: null
+    });
   };
 
   render() {
@@ -72,17 +79,23 @@ class SignInView extends Component {
                 </div>
                 <button className="btn btn-primary">Sign In</button>
               </form>
-              {this.state.error && (
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                  {this.state.error.message}
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-              )}
             </div>
           </div>
         </div>
+        {this.state.error && (
+          <div className="error-center alert alert-danger alert-dismissible fade show" role="alert">
+            {this.state.error.message}
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={this.handleClearError}
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        )}
       </main>
     );
   }

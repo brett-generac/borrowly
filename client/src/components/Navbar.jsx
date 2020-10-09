@@ -29,7 +29,7 @@ const Navbar = (props) => {
             <>
               <li className="nav-item">
                 <Link className="nav-link" to="/things/create">
-                  Contribute a Thing
+                  Contribute
                 </Link>
               </li>
               <li className="nav-item dropdown">

@@ -20,7 +20,6 @@ thingRouter.get("/my", routeGuard, (req, res, next) => {
       res.json({ things });
     })
     .catch((error) => {
-      console.log(error);
       next(error);
     });
 });
@@ -52,7 +51,6 @@ thingRouter.get("/list", (req, res, next) => {
       res.json({ things });
     })
     .catch((error) => {
-      console.log(error);
       next(error);
     });
 });
@@ -64,7 +62,6 @@ thingRouter.post("/delete", routeGuard, (req, res, next) => {
       res.json({ deleted: true });
     })
     .catch((error) => {
-      console.log(error);
       next(error);
     });
 });
@@ -95,7 +92,6 @@ thingRouter.patch("/:id/edit", routeGuard, upload.single("photo"), (req, res, ne
       res.json({ edited: true });
     })
     .catch((error) => {
-      console.log(error);
       next(error);
     });
 });
@@ -108,7 +104,6 @@ thingRouter.get("/:id", (req, res, next) => {
       res.json({ thing });
     })
     .catch((error) => {
-      console.log(error);
       next(error);
     });
 });
@@ -133,7 +128,6 @@ thingRouter.post("/create", routeGuard, upload.single("photo"), (req, res, next)
       res.json({ created: true });
     })
     .catch((error) => {
-      console.log(error);
       next(error);
     });
 });

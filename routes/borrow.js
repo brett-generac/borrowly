@@ -30,7 +30,6 @@ borrowRouter.get("/my", (req, res, next) => {
       res.json({ lends, borrows });
     })
     .catch((error) => {
-      console.log(error);
       next(error);
     });
 });
@@ -58,7 +57,6 @@ borrowRouter.get("/history", (req, res, next) => {
       res.json({ lends, borrows });
     })
     .catch((error) => {
-      console.log(error);
       next(error);
     });
 });
@@ -76,7 +74,6 @@ borrowRouter.post("/create", async (req, res, next) => {
       res.json({ created: true });
     }
   } catch (error) {
-    console.log(error);
     next(error);
   }
 });
@@ -105,7 +102,6 @@ borrowRouter.patch("/approve", (req, res, next) => {
       res.json({ lend, lender });
     })
     .catch((error) => {
-      console.log(error);
       next(error);
     });
 });
@@ -123,7 +119,6 @@ borrowRouter.patch("/end", (req, res, next) => {
       res.json({ lend });
     })
     .catch((error) => {
-      console.log(error);
       next(error);
     });
 });
