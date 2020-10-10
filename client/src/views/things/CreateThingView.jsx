@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import Map from "../../components/Map";
+import "../MapView.css";
+import Map from "../../components/Map/Map";
 import { createThing } from "../../services/thing";
 
 class CreateThingView extends Component {
@@ -79,7 +80,7 @@ class CreateThingView extends Component {
               <h3>
                 Let folks borrow your unused <span className="orange">thing</span>
               </h3>
-              <hr />
+              <hr className="thick" />
               <div className="form-group">
                 <label htmlFor="category-select">Category</label>
                 <select

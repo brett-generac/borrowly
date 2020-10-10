@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import Map from "../../components/Map";
-import SearchList from "../../components/SearchList";
+import "../MapView.css";
+import Map from "../../components/Map/Map";
+import SearchList from "../../components/Lists/SearchList";
 import { loadThings } from "../../services/thing";
 
 export class SearchThings extends Component {

@@ -1,3 +1,5 @@
+/* general styles */
+
 * {
   box-sizing: border-box;
 }
@@ -24,57 +26,12 @@ main {
   min-height: calc(100vh - 4rem);
 }
 
-.container {
-  padding-top: 4rem;
-}
-
-.center {
-  display: flex;
-  justify-content: center;
-}
-
-.form-wrapper {
-  padding-top: 4rem;
-  width: 24rem;
-}
-
-.view-wrapper {
-  width: 48rem;
-}
-
-.left {
-  padding: 2rem;
-  width: 48rem;
-}
-
-.card-title {
-  font-weight: bold !important;
-}
-
-.btn-danger {
-  margin-right: 1rem;
-}
-
-.error-center {
-  position: absolute;
-  top: 6rem;
-  left: calc(50% - 11rem);
-  width: 22rem;
-  max-height: 5rem;
-  overflow: hidden;
-}
-
-.error-side {
-  margin-top: 2rem;
-  width: 50%;
-}
-
 .no-data {
   padding: 4rem 0;
 }
 
 .loading {
-  padding: 8rem 0;
+  padding: 4rem 0;
 }
 
 .orange {
@@ -104,4 +61,14 @@ main {
   height: 2rem;
   margin-right: 1rem;
   filter: grayscale(100%);
+}
+
+/* override bootstrap classes */
+
+.card-title {
+  font-weight: bold !important;
+}
+
+.btn-danger {
+  margin-right: 1rem;
 }

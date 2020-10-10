@@ -7,7 +7,8 @@ class SignUpView extends Component {
     this.state = {
       name: "",
       email: "",
-      password: ""
+      password: "",
+      inputType: "password"
     };
   }
 
@@ -32,6 +33,15 @@ class SignUpView extends Component {
         console.log(error);
       });
   };
+
+  handleToggle = (event) => {
+    event.preventDefault();
+    const inputType = this.state.inputType === "password" ? "text" : "password";
+    this.setState({
+      inputType
+    });
+  };
+
   render() {
     return (
       <main>
@@ -70,7 +80,7 @@ class SignUpView extends Component {
                   <input
                     className="form-control"
                     id="input-password"
-                    type="password"
+                    type={this.state.inputType}
                     name="password"
                     placeholder="Your password"
                     minLength="6"
@@ -78,6 +88,12 @@ class SignUpView extends Component {
                     value={this.state.password}
                     onChange={this.handleInputChange}
                   />
+                </div>
+                <div className="form-check mb-4">
+                  <input className="form-check-input" id="input-toggle" type="checkbox" onChange={this.handleToggle} />
+                  <label className="form-check-label" htmlFor="input-toggle">
+                    Show password
+                  </label>
                 </div>
                 <button className="btn btn-primary">Sign Up</button>
               </form>

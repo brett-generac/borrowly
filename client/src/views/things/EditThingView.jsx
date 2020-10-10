@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import "../../styles/EditThingView.css";
-import Map from "../../components/Map";
+import "../MapView.css";
+import Map from "../../components/Map/Map";
 import { loadThing } from "../../services/thing";
 import { editThing } from "../../services/thing";
 

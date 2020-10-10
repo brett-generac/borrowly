@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import ThingsList from "../../components/ThingsList";
+import "../CenterView.css";
+import ThingsList from "../../components/Lists/ThingsList";
 import { loadMyThings } from "../../services/thing";
 import { deleteThing } from "../../services/thing";
 

@@ -1,15 +1,15 @@
 import React from "react";
-import "../styles/Footer.css";
-import logo from "../images/logo.png";
+import "./Footer.css";
+import logo from "../../images/logo.png";
 
 const Footer = (props) => {
   return (
     <footer className="site-footer">
       <div className="container">
         <div className="row">
-          <div className="col-sm-12 col-md-8">
+          <div id="footer-about" className="col-sm-12 col-md-8">
             <h6>About</h6>
-            <p className="text-justify">
+            <p>
               I'm an unemployed web developer. I worked my patootie off making this thing perfect so that you realize
               how brilliant I am and hire me. Or maybe you're actually using it, great! But I hope not too many people
               use it or I'll have to pay Google real cash money.

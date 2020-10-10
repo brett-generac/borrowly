@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/List.css";
+import "./List.css";
 import { Link } from "react-router-dom";
 
 const HistoryList = (props) => {

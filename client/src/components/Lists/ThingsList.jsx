@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../styles/List.css";
+import "./List.css";
 
 const ThingList = (props) => {
   return (
@@ -21,9 +21,9 @@ const ThingList = (props) => {
                   <div className="card-body">
                     <h5 className="card-title">{thing.name}</h5>
                     <form onSubmit={props.handleDeleteForm}>
-                      <button className="btn btn-danger">Delete</button>
+                      <button className="btn btn-danger">Delete Thing</button>
                       <Link className="btn btn-warning" to={`/things/${thing._id}/edit`}>
-                        Edit
+                        Edit Thing
                       </Link>
                     </form>
                   </div>

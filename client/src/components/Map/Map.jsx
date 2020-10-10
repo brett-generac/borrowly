@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { getContent } from "../services/content";
-import "../styles/Map.css";
+import { getContent } from "../../services/content";
+import "./Map.css";
 
 class Map extends Component {
   constructor() {

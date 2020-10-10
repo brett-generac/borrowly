@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/AboutView.css";
+import "../CenterView.css";
 import picture from "../../images/about.jpeg";
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.png";
@@ -26,6 +26,7 @@ const AboutView = (props) => {
               But we all come into this world with the right to ask for what we want. So you'll start out with one favor
               right from the get go.
             </p>
+            <p>Start participating today.</p>
             {(props.user && (
               <>
                 <p>

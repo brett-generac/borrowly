@@ -15,12 +15,13 @@ const indexRouter = require("./routes/index");
 const authRouter = require("./routes/auth");
 const thingRouter = require("./routes/thing");
 const borrowRouter = require("./routes/borrow");
+const profileRouter = require("./routes/profile");
 
 const app = express();
 
 app.set("trust proxy", 1);
 
-//app.use(logger("dev"));
+app.use(logger("dev"));
 app.use(serveFavicon(join(__dirname, "public/images", "favicon.ico")));
 app.use(
   cors({
@@ -36,7 +37,6 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 60 * 60 * 24 * 15,
-      //changed sameSite from lax to none
       sameSite: "lax",
       httpOnly: true,
       secure: process.env.NODE_ENV === "production"
@@ -53,6 +53,7 @@ app.use("/", indexRouter);
 app.use("/auth", authRouter);
 app.use("/things", thingRouter);
 app.use("/borrows", borrowRouter);
+app.use("/profile", profileRouter);
 
 // Catch missing routes and forward to error handler
 app.use((req, res, next) => {

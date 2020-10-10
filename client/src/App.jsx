@@ -1,23 +1,24 @@
 import React, { Component } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import "./styles/App.css";
-import ErrorBoundary from "./components/ErrorBoundary";
+import "./App.css";
 import HomeView from "./views/index/HomeView";
 import AboutView from "./views/index/AboutView";
 import NotFoundView from "./views/index/NotFoundView";
 import SignInView from "./views/auth/SignInView";
 import SignUpView from "./views/auth/SignUpView";
-import ProfileView from "./views/profile/ProfileView";
-import MyHistoryView from "./views/profile/MyHistoryView";
 import MyThingsView from "./views/profile/MyThingsView";
+import MyBorrowsView from "./views/profile/MyBorrowsView";
+import MyHistoryView from "./views/profile/MyHistoryView";
+import ProfileView from "./views/profile/ProfileView";
 import SearchThingsView from "./views/things/SearchThingsView";
 import CreateThingView from "./views/things/CreateThingView";
 import EditThingView from "./views/things/EditThingView";
 import SingleThingView from "./views/things/SingleThingView";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer";
+import ErrorBoundary from "./components/ErrorBoundary";
 import ProtectedRoute from "./components/ProtectedRoute";
-import { loadMe } from "./services/auth";
+import { loadMe } from "./services/profile";
 import { signOut } from "./services/auth";
 import { getUserCoordinates } from "./services/geocoder";
 import { getUserLocation } from "./services/geocoder";
@@ -94,9 +95,9 @@ class App extends Component {
   render() {
     return (
       <div id="App">
-        <BrowserRouter>
-          <Navbar user={this.state.user} handleSignOut={this.handleSignOut} />
-          <ErrorBoundary>
+        <ErrorBoundary>
+          <BrowserRouter>
+            <Navbar user={this.state.user} handleSignOut={this.handleSignOut} />
             <Switch>
               <Route
                 path="/"
@@ -148,10 +149,8 @@ class App extends Component {
                 render={(props) => <SingleThingView user={this.state.user} {...props} exact />}
               />
               <ProtectedRoute
-                path="/profile"
-                render={(props) => (
-                  <ProfileView {...props} user={this.state.user} handleUserUpdate={this.handleUserUpdate} />
-                )}
+                path="/profile/borrows"
+                render={(props) => <MyBorrowsView {...props} user={this.state.user} exact />}
                 authorized={this.state.user}
                 redirect="/auth/sign-in"
                 exact
@@ -170,11 +169,20 @@ class App extends Component {
                 redirect="/auth/sign-in"
                 exact
               />
+              <ProtectedRoute
+                path="/profile"
+                render={(props) => (
+                  <ProfileView {...props} user={this.state.user} handleUserUpdate={this.handleUserUpdate} />
+                )}
+                authorized={this.state.user}
+                redirect="/auth/sign-in"
+                exact
+              />
               <Route component={NotFoundView} />
             </Switch>
-          </ErrorBoundary>
-          <Footer />
-        </BrowserRouter>
+            <Footer />
+          </BrowserRouter>
+        </ErrorBoundary>
       </div>
     );
   }

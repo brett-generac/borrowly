@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import "../../styles/SingleThingView.css";
-import Map from "../../components/Map";
+import "../MapView.css";
+import Map from "../../components/Map/Map";
 import { deleteThing, loadThing } from "../../services/thing";
 import { createBorrow } from "../../services/borrow";
 

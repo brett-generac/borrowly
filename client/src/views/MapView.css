@@ -1,0 +1,28 @@
+/* general styles for views with map */
+
+.left {
+  padding: 2rem;
+  width: 48rem;
+}
+
+.error-side {
+  margin-top: 2rem;
+  width: 50%;
+}
+
+/* specific styles for views with map */
+
+#edit-img {
+  margin: 1rem 0;
+  border-radius: 10px;
+  width: 14rem;
+}
+
+#single {
+  flex-direction: column;
+}
+
+#single img {
+  margin: 1rem;
+  width: 22rem;
+}

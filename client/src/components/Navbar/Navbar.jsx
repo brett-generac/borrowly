@@ -1,6 +1,6 @@
 import React from "react";
-import "../styles/Navbar.css";
-import logo from "../images/logo.png";
+import "./Navbar.css";
+import logo from "../../images/logo.png";
 import { Link } from "react-router-dom";
 
 const Navbar = (props) => {
@@ -34,7 +34,7 @@ const Navbar = (props) => {
               </li>
               <li className="nav-item dropdown">
                 <button
-                  className="dropdown-toggle"
+                  className="btn btn-secondary dropdown-toggle"
                   id="navbarDropdown"
                   data-toggle="dropdown"
                   aria-haspopup="true"
@@ -43,14 +43,17 @@ const Navbar = (props) => {
                   <span>Hi, {props.user.name}</span>
                 </button>
                 <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                  <Link className="dropdown-item" to="/profile">
-                    Profile
+                  <Link className="dropdown-item" to="/profile/borrows">
+                    Borrows
                   </Link>
                   <Link className="dropdown-item" to="/profile/things">
                     Things
                   </Link>
                   <Link className="dropdown-item" to="/profile/history">
                     History
+                  </Link>
+                  <Link className="dropdown-item" to="/profile">
+                    Profile
                   </Link>
                   <div className="dropdown-divider"></div>
                   <button className="dropdown-item" onClick={props.handleSignOut}>

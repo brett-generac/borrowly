@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../../styles/HomeView.css";
+import "../CenterView.css";
 import { getInputCoordinates } from "../../services/geocoder";
 import { getUserCoordinates } from "../../services/geocoder";
 import { getUserLocation } from "../../services/geocoder";
@@ -82,7 +82,7 @@ export class HomeView extends Component {
     return (
       <main id="home-main">
         <div className="container center">
-          <div id="top" className="row form-wrapper">
+          <div id="home-top-row" className="row form-wrapper">
             <div className="col">
               <form onSubmit={this.handleSearchSubmit}>
                 <div className="form-group">
@@ -127,7 +127,7 @@ export class HomeView extends Component {
                 <button className="btn btn-primary">Search Things</button>
               </form>
             </div>
-            <div id="bottom" className="row">
+            <div id="home-bottom-row" className="row">
               <div className="col">
                 <h3 id="sharing">Sharing Is Caring</h3>
                 <p>

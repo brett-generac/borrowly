@@ -1,25 +1,23 @@
 import React, { Component } from "react";
 import ErrorView from "../views/index/ErrorView";
 
-class ErrorHandler extends Component {
+class ErrorBoundary extends Component {
   constructor() {
     super();
     this.state = {
-      catch: false,
-      error: null
+      catch: false
     };
   }
 
   componentDidCatch(error) {
     this.setState({
-      catch: true,
-      error
+      catch: true
     });
   }
 
   render() {
-    return this.state.catch ? <ErrorView error={this.state.error} /> : this.props.children;
+    return this.state.catch ? <ErrorView /> : this.props.children;
   }
 }
 
-export default ErrorHandler;
+export default ErrorBoundary;

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import HistoryList from "../../components/HistoryList";
+import "../CenterView.css";
+import HistoryList from "../../components/Lists/HistoryList";
 import { loadMyHistory } from "../../services/borrow";
 
 class MyHistoryView extends Component {
