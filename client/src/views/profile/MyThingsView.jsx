@@ -22,14 +22,17 @@ class MyThingsView extends Component {
     });
   }
 
-  handleDeleteSubmit = (event) => {
+  handleDeleteSubmit = (event, id) => {
     event.preventDefault();
-    const body = {
-      id: this.state.thing._id
-    };
+    const body = { id };
     deleteThing(body)
       .then(() => {
-        this.props.history.push("/things/list");
+        const things = [...this.state.things];
+        const index = things.findIndex((element) => element._id === id);
+        things.splice(index);
+        this.setState({
+          things
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -52,7 +55,7 @@ class MyThingsView extends Component {
                 </h1>
                 <h5>You have {things} things up for grabs</h5>
                 <hr className="thick" />
-                <ThingsList things={this.state.things} />
+                <ThingsList things={this.state.things} handleDeleteSubmit={this.handleDeleteSubmit} />
               </div>
             )) || (
               <div className="col">

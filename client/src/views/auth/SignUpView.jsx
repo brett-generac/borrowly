@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { signUp } from "../../services/auth";
 
+//edge case, able to create two users with same email
+
 class SignUpView extends Component {
   constructor() {
     super();
@@ -19,19 +21,18 @@ class SignUpView extends Component {
     });
   };
 
-  handleFormSubmit = (event) => {
+  handleFormSubmit = async (event) => {
     event.preventDefault();
     const { name, email, password } = this.state;
     const body = { name, email, password };
-    signUp(body)
-      .then((data) => {
-        const { user } = data;
-        this.props.handleUserUpdate(user);
-        this.props.history.push("/about");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const data = await signUp(body);
+      const user = data.user;
+      this.props.handleUserUpdate(user);
+      this.props.history.push("/about");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   handleToggle = (event) => {

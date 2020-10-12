@@ -11,8 +11,10 @@ profileRouter.get("/me", (req, res) => {
   res.json({ user });
 });
 
-profileRouter.patch("/me", routeGuard, (req, res) => {
+profileRouter.patch("/me", routeGuard, async (req, res) => {
   console.log(req.body);
+  //update route needs completing
+  const user = await User.findByIdAndUpdate({});
 });
 
 module.exports = profileRouter;

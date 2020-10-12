@@ -25,17 +25,14 @@ export class HomeView extends Component {
     event.preventDefault();
     getInputCoordinates(this.state.location)
       .then((data) => {
-        if (data.results[0]) {
-          const lng = data.results[0].geometry.location.lng;
-          const lat = data.results[0].geometry.location.lat;
-          const location = data.results[0].address_components[0].long_name;
-          const coordinates = [lng, lat];
-          this.props.handleCoordinatesUpdate(coordinates);
-          this.props.handleLocationUpdate(location);
-          this.props.handleCategoryUpdate(this.state.category);
-        } else {
-          throw new Error("No place found with that name");
-        }
+        if (!data.results[0]) throw new Error("No place found with that name");
+        const lng = data.results[0].geometry.location.lng;
+        const lat = data.results[0].geometry.location.lat;
+        const location = data.results[0].address_components[0].long_name;
+        const coordinates = [lng, lat];
+        this.props.handleCoordinatesUpdate(coordinates);
+        this.props.handleLocationUpdate(location);
+        this.props.handleCategoryUpdate(this.state.category);
       })
       .then(() => {
         this.props.history.push(`/things/list`);

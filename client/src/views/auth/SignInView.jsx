@@ -18,22 +18,21 @@ class SignInView extends Component {
     });
   };
 
-  handleFormSubmit = (event) => {
+  handleFormSubmit = async (event) => {
     event.preventDefault();
     const { email, password } = this.state;
     const body = { email, password };
-    signIn(body)
-      .then((data) => {
-        const { user } = data;
-        this.props.handleUserUpdate(user);
-        this.props.history.push("/");
-      })
-      .catch((error) => {
-        console.log(error);
-        this.setState({
-          error: error.response.data.error
-        });
+    try {
+      const data = await signIn(body);
+      const user = data.user;
+      this.props.handleUserUpdate(user);
+      this.props.history.push("/");
+    } catch (error) {
+      console.log(error);
+      this.setState({
+        error: error.response.data.error
       });
+    }
   };
 
   handleClearError = (event) => {

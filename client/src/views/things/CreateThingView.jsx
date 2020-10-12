@@ -47,7 +47,7 @@ class CreateThingView extends Component {
     if (hasRequired) {
       createThing(body)
         .then((data) => {
-          const id = data.document._id;
+          const id = data.thing._id;
           this.props.history.push(`/things/${id}`);
         })
         .catch((error) => {

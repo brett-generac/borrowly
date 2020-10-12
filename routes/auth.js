@@ -6,49 +6,34 @@ const User = require("../models/user");
 
 const router = new Router();
 
-router.post("/sign-up", (req, res, next) => {
+router.post("/sign-up", async (req, res, next) => {
   const { name, email, password } = req.body;
-  bcryptjs
-    .hash(password, 10)
-    .then((hash) => {
-      return User.create({
-        name,
-        email,
-        passwordHash: hash
-      });
-    })
-    .then((user) => {
-      req.session.user = user._id;
-      res.json({ user });
-    })
-    .catch((error) => {
-      next(error);
+  try {
+    const hash = await bcryptjs.hash(password, 10);
+    const user = await User.create({
+      name,
+      email,
+      passwordHash: hash
     });
+    req.session.user = user._id;
+    res.json({ user });
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.post("/sign-in", (req, res, next) => {
-  let user;
+router.post("/sign-in", async (req, res, next) => {
   const { email, password } = req.body;
-  User.findOne({ email })
-    .then((document) => {
-      if (!document) {
-        throw new Error("No user found with that email.");
-      } else {
-        user = document;
-        return bcryptjs.compare(password, user.passwordHash);
-      }
-    })
-    .then((result) => {
-      if (result) {
-        req.session.user = user._id;
-        res.json({ user });
-      } else {
-        throw new Error("Wrong password.");
-      }
-    })
-    .catch((error) => {
-      next(error);
-    });
+  try {
+    const user = await User.findOne({ email });
+    if (!user) throw new Error("No user found with that email.");
+    const result = await bcryptjs.compare(password, user.passwordHash);
+    if (!result) throw new Error("Wrong password.");
+    req.session.user = user._id;
+    res.json({ user });
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.post("/sign-out", (req, res) => {

@@ -43,32 +43,30 @@ const BorrowsList = (props) => {
           </h3>
           <ul>
             {props.lends.map((lend) => (
-              <>
+              <li key={lend._id}>
                 <hr />
-                <li key={lend._id}>
-                  <div className="card">
-                    <img src={lend.thing.photoUrl} className="card-img-top" alt={lend.thing.name} />
-                    <div className="card-body">
-                      <h5 className="card-title">{lend.thing.name}</h5>
-                      {(lend.active && (
-                        <>
-                          <p className="card-text">End the borrow once {lend.borrower.name} returns the thing</p>
-                          <form onSubmit={(event) => props.handleEndSubmit(event, lend._id)}>
-                            <button className="btn btn-warning">End Borrow</button>
-                          </form>
-                        </>
-                      )) || (
-                        <>
-                          <p className="card-text">Pending your approval to {lend.borrower.name}</p>
-                          <form onSubmit={(event) => props.handleApproveSubmit(event, lend._id)}>
-                            <button className="btn btn-primary">Approve Borrow</button>
-                          </form>
-                        </>
-                      )}
-                    </div>
+                <div className="card">
+                  <img src={lend.thing.photoUrl} className="card-img-top" alt={lend.thing.name} />
+                  <div className="card-body">
+                    <h5 className="card-title">{lend.thing.name}</h5>
+                    {(lend.active && (
+                      <>
+                        <p className="card-text">End the borrow once {lend.borrower.name} returns the thing</p>
+                        <form onSubmit={(event) => props.handleEndSubmit(event, lend._id)}>
+                          <button className="btn btn-warning">End Borrow</button>
+                        </form>
+                      </>
+                    )) || (
+                      <>
+                        <p className="card-text">Pending your approval to {lend.borrower.name}</p>
+                        <form onSubmit={(event) => props.handleApproveSubmit(event, lend._id)}>
+                          <button className="btn btn-primary">Approve Borrow</button>
+                        </form>
+                      </>
+                    )}
                   </div>
-                </li>
-              </>
+                </div>
+              </li>
             ))}
           </ul>
         </>

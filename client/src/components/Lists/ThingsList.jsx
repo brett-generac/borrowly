@@ -20,7 +20,7 @@ const ThingList = (props) => {
                   </Link>
                   <div className="card-body">
                     <h5 className="card-title">{thing.name}</h5>
-                    <form onSubmit={props.handleDeleteForm}>
+                    <form onSubmit={(event) => props.handleDeleteSubmit(event, thing._id)}>
                       <button className="btn btn-danger">Delete Thing</button>
                       <Link className="btn btn-warning" to={`/things/${thing._id}/edit`}>
                         Edit Thing

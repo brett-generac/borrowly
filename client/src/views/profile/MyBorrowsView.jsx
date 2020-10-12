@@ -5,6 +5,12 @@ import { loadMyBorrows } from "../../services/borrow";
 import { approveBorrow } from "../../services/borrow";
 import { endBorrow } from "../../services/borrow";
 
+//edge case, when borrow is ended and there is other lends in the lend list
+//the other lends get removed from list too, appear once page is refreshed
+
+//other edge case, a user deletes a thing that has a borrow requested, and
+//the route tries to populate thing but it cannot, history view probably has same issue.
+
 class MyBorrowsView extends Component {
   constructor() {
     super();
@@ -32,7 +38,7 @@ class MyBorrowsView extends Component {
     };
     approveBorrow(body)
       .then((data) => {
-        const { lend } = data;
+        const lend = data.lend;
         const user = data.lender;
         const lends = [...this.state.lends];
         const index = lends.findIndex((element) => element._id === lend._id);

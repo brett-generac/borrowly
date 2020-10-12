@@ -150,7 +150,9 @@ class App extends Component {
               />
               <ProtectedRoute
                 path="/profile/borrows"
-                render={(props) => <MyBorrowsView {...props} user={this.state.user} exact />}
+                render={(props) => (
+                  <MyBorrowsView {...props} user={this.state.user} handleUserUpdate={this.handleUserUpdate} exact />
+                )}
                 authorized={this.state.user}
                 redirect="/auth/sign-in"
                 exact
