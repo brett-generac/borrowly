@@ -5,6 +5,7 @@ require("dotenv").config();
 const debug = require("debug")("borrowly:server");
 const app = require("./app");
 const mongoose = require("mongoose");
+const { join } = require("path");
 
 const PORT = parseInt(process.env.PORT, 10);
 const URI = process.env.MONGODB_URI;
@@ -50,6 +51,11 @@ const onListening = (server) => {
 
 const initiate = () => {
   app.set("port", PORT);
+
+  // Deliver react app
+  app.get("*", (req, res) => {
+    res.sendFile(join(__dirname, "client", "build", "index.html"));
+  });
 
   const server = app.listen(PORT);
   server.on("error", (error) => onError(error));

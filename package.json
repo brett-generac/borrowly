@@ -6,7 +6,8 @@
     "start": "node ./server",
     "dev": "nodemon ./server",
     "dev:debug": "DEBUG=borrowly* npm run dev",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -35,5 +36,8 @@
     "eslint-plugin-prettier": "^3.1.1",
     "prettier": "^1.18.2",
     "@ironh/eslint-config": "^0.0.2"
+  },
+  "engines": {
+    "node": "14.5.0"
   }
 }

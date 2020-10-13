@@ -23,6 +23,7 @@ app.set("trust proxy", 1);
 
 app.use(logger("dev"));
 app.use(serveFavicon(join(__dirname, "public/images", "favicon.ico")));
+app.use(express.static(join(__dirname, "client", "build")));
 app.use(
   cors({
     origin: [process.env.CLIENT_APP_URL],
