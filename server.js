@@ -52,7 +52,6 @@ const onListening = (server) => {
 const initiate = () => {
   app.set("port", PORT);
 
-  // Deliver react app
   app.get("*", (req, res) => {
     res.sendFile(join(__dirname, "client", "build", "index.html"));
   });
