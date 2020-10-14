@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "../CenterView.css";
+import ErrorMessage from "../../components/ErrorMessage";
 import { getInputCoordinates } from "../../services/geocoder";
 import { getUserCoordinates } from "../../services/geocoder";
 import { getUserLocation } from "../../services/geocoder";
@@ -16,63 +17,49 @@ export class HomeView extends Component {
 
   handleInputChange = (event) => {
     const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
+    this.setState({ [name]: value });
   };
 
-  handleSearchSubmit = (event) => {
+  handleSearchSubmit = async (event) => {
     event.preventDefault();
-    getInputCoordinates(this.state.location)
-      .then((data) => {
-        if (!data.results[0]) throw new Error("No place found with that name");
-        const lng = data.results[0].geometry.location.lng;
-        const lat = data.results[0].geometry.location.lat;
-        const location = data.results[0].address_components[0].long_name;
-        const coordinates = [lng, lat];
-        this.props.handleCoordinatesUpdate(coordinates);
-        this.props.handleLocationUpdate(location);
-        this.props.handleCategoryUpdate(this.state.category);
-      })
-      .then(() => {
-        this.props.history.push(`/things/list`);
-      })
-      .catch((error) => {
-        console.log(error);
-        this.setState({
-          error
-        });
+    try {
+      const data = await getInputCoordinates(this.state.location);
+      if (!data.results[0]) throw new Error("Unable to find that place");
+      const lng = data.results[0].geometry.location.lng;
+      const lat = data.results[0].geometry.location.lat;
+      const location = data.results[0].address_components[0].long_name;
+      const coordinates = [lng, lat];
+      this.props.handleCoordinatesUpdate(coordinates);
+      this.props.handleLocationUpdate(location);
+      this.props.handleCategoryUpdate(this.state.category);
+      this.props.history.push(`/things/list`);
+    } catch (error) {
+      this.setState({ error });
+    }
+  };
+
+  handleNearbySubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const coordinateData = await getUserCoordinates();
+      const lng = coordinateData.coords.longitude;
+      const lat = coordinateData.coords.latitude;
+      const coordinates = [lng, lat];
+      this.props.handleCoordinatesUpdate(coordinates);
+      this.props.handleCategoryUpdate(this.state.category);
+      const locationData = await getUserLocation(coordinates);
+      const location = locationData.results[0].address_components[2].long_name;
+      this.props.handleLocationUpdate(location);
+      this.props.history.push(`/things/list`);
+    } catch (error) {
+      this.setState({
+        error: error.response.data.error
       });
+    }
   };
 
-  handleNearbySubmit = (event) => {
-    event.preventDefault();
-    getUserCoordinates()
-      .then((data) => {
-        const lng = data.coords.longitude;
-        const lat = data.coords.latitude;
-        const coordinates = [lng, lat];
-        this.props.handleCoordinatesUpdate(coordinates);
-        this.props.handleCategoryUpdate(this.state.category);
-        return getUserLocation(coordinates);
-      })
-      .then((data) => {
-        const location = data.results[0].address_components[2].long_name;
-        this.props.handleLocationUpdate(location);
-        this.props.history.push(`/things/list`);
-      })
-      .catch((error) => {
-        this.setState({
-          error: error.response.data.error
-        });
-      });
-  };
-
-  handleClearError = (event) => {
-    event.preventDefault();
-    this.setState({
-      error: null
-    });
+  handleClearError = () => {
+    this.setState({ error: null });
   };
 
   render() {
@@ -139,18 +126,11 @@ export class HomeView extends Component {
           </div>
         </div>
         {this.state.error && (
-          <div className="error-center alert alert-danger alert-dismissible fade show" role="alert">
-            {this.state.error.message}
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={this.handleClearError}
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
+          <ErrorMessage
+            classToAdd="error-center"
+            message={this.state.error.message}
+            handleClearError={this.handleClearError}
+          />
         )}
       </main>
     );

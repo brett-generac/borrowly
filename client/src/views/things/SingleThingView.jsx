@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "../MapView.css";
 import Map from "../../components/Map/Map";
+import ErrorMessage from "../../components/ErrorMessage";
 import { deleteThing, loadThing } from "../../services/thing";
 import { createBorrow } from "../../services/borrow";
 
@@ -10,7 +11,8 @@ class SingleThingView extends Component {
     super();
     this.state = {
       loaded: false,
-      thing: null
+      thing: null,
+      error: null
     };
   }
 
@@ -24,29 +26,37 @@ class SingleThingView extends Component {
     });
   }
 
-  handleDeleteSubmit = (event) => {
+  handleDeleteSubmit = async (event) => {
     event.preventDefault();
     const body = {
       id: this.state.thing._id
     };
-    deleteThing(body)
-      .then(() => {
-        this.props.history.push("/things/list");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const data = await deleteThing(body);
+      if (!data.deleted) throw new Error("Unable to delete that thing");
+      this.props.history.push("/profile/things");
+    } catch (error) {
+      this.setState({ error });
+    }
   };
 
-  handleBorrowSubmit = (event) => {
+  handleAskSubmit = async (event) => {
     event.preventDefault();
     const body = {
       lender: this.state.thing.owner._id,
       thing: this.state.thing._id
     };
-    createBorrow(body).then(() => {
+    try {
+      const data = await createBorrow(body);
+      if (!data.created) throw new Error("Unable to ask to borrow");
       this.props.history.push("/profile");
-    });
+    } catch (error) {
+      this.setState({ error });
+    }
+  };
+
+  handleClearError = () => {
+    this.setState({ error: null });
   };
 
   render() {
@@ -77,7 +87,7 @@ class SingleThingView extends Component {
                     </form>
                   )}
                   {!owner && user && (
-                    <form onSubmit={this.handleBorrowSubmit}>
+                    <form onSubmit={this.handleAskSubmit}>
                       <button className="btn btn-info">Ask to Borrow</button>
                     </form>
                   )}
@@ -85,6 +95,13 @@ class SingleThingView extends Component {
                 </div>
               </div>
             </div>
+            {this.state.error && (
+              <ErrorMessage
+                classToAdd="error-side"
+                message={this.state.error.message}
+                handleClearError={this.handleClearError}
+              />
+            )}
             <Map view="single" center={thing.location.coordinates} marker={thing} />
           </div>
         )) || (

@@ -4,9 +4,11 @@ import logo from "../../images/logo.png";
 import { Link } from "react-router-dom";
 
 const Navbar = (props) => {
+  let favors = "";
+  if (props.user) favors = props.user.favors === 1 ? "favor" : "favors";
   return (
     <nav className="navbar navbar-expand-md navbar-light bg-light fixed-top">
-      <img className="logo-navbar" src={logo} alt="tree logo" />
+      <img id="navbar-logo" src={logo} alt="tree logo" />
       <Link className="navbar-brand" to="/">
         <h3>
           borrow<span className="orange">ly</span>
@@ -61,10 +63,10 @@ const Navbar = (props) => {
                   </button>
                 </div>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/about">
-                  About
-                </Link>
+              <li id="nav-item-favors" className="nav-item">
+                <small>
+                  {props.user.favors} {favors}
+                </small>
               </li>
             </>
           )) || (

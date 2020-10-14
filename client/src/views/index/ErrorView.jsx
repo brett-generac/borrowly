@@ -9,9 +9,7 @@ const ErrorView = (props) => {
           <div className="col">
             <h1 className="huge margin-bottom">Whoops!</h1>
             <h1 className="orange margin-bottom">There was an error</h1>
-            <h5 className="margin-bottom">Error code: {props.error.code}</h5>
             <h5 className="margin-bottom">Error message: {props.error.message}</h5>
-            <h5 className="margin-bottom">Error info: {props.error.info}</h5>
           </div>
         </div>
         <div className="row">

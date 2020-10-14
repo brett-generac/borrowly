@@ -74,3 +74,12 @@
     margin-top: 2rem;
   }
 }
+
+#profile-button {
+  float: right;
+}
+
+#profile-form {
+  margin: 0 auto;
+  width: 50%;
+}

@@ -7,4 +7,4 @@ const api = axios.create({
 
 export const loadMe = () => api.get("/me").then((response) => response.data);
 
-export const editMe = () => api.patch("/me").then((response) => response.data);
+export const editMe = (body) => api.patch("/me", body).then((response) => response.data);

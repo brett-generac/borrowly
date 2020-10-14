@@ -13,13 +13,13 @@ borrowRouter.get("/my", async (req, res, next) => {
       lender: req.user._id,
       closed: false
     })
-      .populate("borrower")
+      .populate("borrower", "-passwordHash")
       .populate("thing");
     const borrows = await Borrow.find({
       borrower: req.user._id,
       closed: false
     })
-      .populate("lender")
+      .populate("lender", "-passwordHash")
       .populate("thing");
     res.json({ lends, borrows });
   } catch (error) {
@@ -33,13 +33,13 @@ borrowRouter.get("/history", async (req, res, next) => {
       lender: req.user._id,
       closed: true
     })
-      .populate("borrower")
+      .populate("borrower", "-passwordHash")
       .populate("thing");
     const borrows = await Borrow.find({
       borrower: req.user._id,
       closed: true
     })
-      .populate("lender")
+      .populate("lender", "-passwordHash")
       .populate("thing");
     res.json({ lends, borrows });
   } catch (error) {
@@ -68,8 +68,8 @@ borrowRouter.patch("/approve", async (req, res, next) => {
   try {
     const borrowId = req.body.id;
     const lend = await Borrow.findByIdAndUpdate(borrowId, { active: true }, { new: true })
-      .populate("lender")
-      .populate("borrower")
+      .populate("lender", "-passwordHash")
+      .populate("borrower", "-passwordHash")
       .populate("thing");
     const lender = await User.findByIdAndUpdate(req.user._id, { $inc: { favors: 1 } }, { new: true });
     const thingId = lend.thing._id;

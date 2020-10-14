@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "../MapView.css";
 import Map from "../../components/Map/Map";
+import ErrorMessage from "../../components/ErrorMessage";
 import { loadThing } from "../../services/thing";
 import { editThing } from "../../services/thing";
 
@@ -14,7 +15,8 @@ class EditThingView extends Component {
       description: "",
       photo: null,
       coordinates: [],
-      photoUrl: ""
+      photoUrl: "",
+      error: null
     };
   }
 
@@ -35,45 +37,43 @@ class EditThingView extends Component {
         });
       })
       .catch((error) => {
-        console.log(error);
+        this.setState({ error });
       });
   }
 
   handleInputChange = (event) => {
     const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
+    this.setState({ [name]: value });
   };
 
   handlePhotoChange = (event) => {
     const photo = event.target.files[0];
-    this.setState({
-      photo
-    });
+    this.setState({ photo });
   };
 
   handleMapClick = (eventLatLng) => {
     const lng = eventLatLng.lng();
     const lat = eventLatLng.lat();
     const coordinates = [lng, lat];
-    this.setState({
-      coordinates
-    });
+    this.setState({ coordinates });
   };
 
-  handleFormSubmit = (event) => {
+  handleFormSubmit = async (event) => {
     event.preventDefault();
     const id = this.props.match.params.id;
     const { category, name, description, photo, coordinates, photoUrl } = this.state;
     const body = { category, name, description, photo, coordinates, photoUrl };
-    editThing(id, body)
-      .then(() => {
-        this.props.history.push(`/things/${id}`);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const data = await editThing(id, body);
+      if (!data.edited) throw new Error("Unable to edit that thing");
+      this.props.history.push(`/things/${id}`);
+    } catch (error) {
+      this.setState({ error });
+    }
+  };
+
+  handleClearError = () => {
+    this.setState({ error: null });
   };
 
   render() {
@@ -87,7 +87,7 @@ class EditThingView extends Component {
                   Edit your <span className="orange">thing</span>
                 </h3>
                 <hr />
-                <div className="form-group">
+                <div id="category-form-group" className="form-group">
                   <label htmlFor="category-select">Edit category</label>
                   <select
                     className="form-control"
@@ -136,7 +136,7 @@ class EditThingView extends Component {
                     onChange={this.handleInputChange}
                   />
                 </div>
-                <h5 className="orange">Click the map to change location of the thing</h5>
+                <h5 className="orange">Click a spot on the map to change the location of your thing</h5>
                 <img id="edit-img" src={this.state.photoUrl} alt={this.state.name} />
                 <div className="form-group">
                   <label htmlFor="photo-input">Edit photo</label>
@@ -148,7 +148,7 @@ class EditThingView extends Component {
                     onChange={this.handlePhotoChange}
                   />
                 </div>
-                <button className="btn btn-warning">Edit</button>
+                <button className="btn btn-warning">Edit Thing</button>
               </form>
             </div>
             <Map
@@ -165,6 +165,13 @@ class EditThingView extends Component {
             </div>
             <div className="map-loading"></div>
           </div>
+        )}
+        {this.state.error && (
+          <ErrorMessage
+            classToAdd="error-side"
+            message={this.state.error.message}
+            handleClearError={this.handleClearError}
+          />
         )}
       </main>
     );

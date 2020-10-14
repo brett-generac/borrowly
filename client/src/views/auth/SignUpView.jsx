@@ -10,37 +10,27 @@ class SignUpView extends Component {
       name: "",
       email: "",
       password: "",
-      inputType: "password"
+      showPassword: false
     };
   }
 
   handleInputChange = (event) => {
     const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
+    this.setState({ [name]: value });
   };
 
   handleFormSubmit = async (event) => {
     event.preventDefault();
     const { name, email, password } = this.state;
     const body = { name, email, password };
-    try {
-      const data = await signUp(body);
-      const user = data.user;
-      this.props.handleUserUpdate(user);
-      this.props.history.push("/about");
-    } catch (error) {
-      console.log(error);
-    }
+    const data = await signUp(body);
+    const user = data.user;
+    this.props.handleUserUpdate(user);
+    this.props.history.push("/about");
   };
 
-  handleToggle = (event) => {
-    event.preventDefault();
-    const inputType = this.state.inputType === "password" ? "text" : "password";
-    this.setState({
-      inputType
-    });
+  togglePassword = () => {
+    this.setState({ showPassword: !this.state.showPassword });
   };
 
   render() {
@@ -81,7 +71,7 @@ class SignUpView extends Component {
                   <input
                     className="form-control"
                     id="input-password"
-                    type={this.state.inputType}
+                    type={this.state.showPassword ? "text" : "password"}
                     name="password"
                     placeholder="Your password"
                     minLength="6"
@@ -91,7 +81,12 @@ class SignUpView extends Component {
                   />
                 </div>
                 <div className="form-check mb-4">
-                  <input className="form-check-input" id="input-toggle" type="checkbox" onChange={this.handleToggle} />
+                  <input
+                    className="form-check-input"
+                    id="input-toggle"
+                    type="checkbox"
+                    onChange={this.togglePassword}
+                  />
                   <label className="form-check-label" htmlFor="input-toggle">
                     Show password
                   </label>

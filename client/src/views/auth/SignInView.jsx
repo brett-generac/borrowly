@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ErrorMessage from "../../components/ErrorMessage";
 import { signIn } from "../../services/auth";
 
 class SignInView extends Component {
@@ -13,9 +14,7 @@ class SignInView extends Component {
 
   handleInputChange = (event) => {
     const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
+    this.setState({ [name]: value });
   };
 
   handleFormSubmit = async (event) => {
@@ -28,18 +27,12 @@ class SignInView extends Component {
       this.props.handleUserUpdate(user);
       this.props.history.push("/");
     } catch (error) {
-      console.log(error);
-      this.setState({
-        error: error.response.data.error
-      });
+      this.setState({ error: error.response.data.error });
     }
   };
 
-  handleClearError = (event) => {
-    event.preventDefault();
-    this.setState({
-      error: null
-    });
+  handleClearError = () => {
+    this.setState({ error: null });
   };
 
   render() {
@@ -82,18 +75,11 @@ class SignInView extends Component {
           </div>
         </div>
         {this.state.error && (
-          <div className="error-center alert alert-danger alert-dismissible fade show" role="alert">
-            {this.state.error.message}
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={this.handleClearError}
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
+          <ErrorMessage
+            classToAdd="error-center"
+            message={this.state.error.message}
+            handleClearError={this.handleClearError}
+          />
         )}
       </main>
     );

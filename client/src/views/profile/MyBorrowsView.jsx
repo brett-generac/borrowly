@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import "../CenterView.css";
 import BorrowsList from "../../components/Lists/BorrowsList";
+import ErrorMessage from "../../components/ErrorMessage";
 import { loadMyBorrows } from "../../services/borrow";
 import { approveBorrow } from "../../services/borrow";
 import { endBorrow } from "../../services/borrow";
 
 //edge case, when borrow is ended and there is other lends in the lend list
-//the other lends get removed from list too, appear once page is refreshed
+//the other lends get removed from list too, reappear once page is refreshed
 
 //other edge case, a user deletes a thing that has a borrow requested, and
 //the route tries to populate thing but it cannot, history view probably has same issue.
@@ -17,7 +18,8 @@ class MyBorrowsView extends Component {
     this.state = {
       loaded: false,
       borrows: [],
-      lends: []
+      lends: [],
+      error: null
     };
   }
 
@@ -31,45 +33,45 @@ class MyBorrowsView extends Component {
     });
   }
 
-  handleApproveSubmit = (event, id) => {
+  handleApproveSubmit = async (event, id) => {
     event.preventDefault();
     const body = {
       id
     };
-    approveBorrow(body)
-      .then((data) => {
-        const lend = data.lend;
-        const user = data.lender;
-        const lends = [...this.state.lends];
-        const index = lends.findIndex((element) => element._id === lend._id);
-        lends[index] = lend;
-        this.props.handleUserUpdate(user);
-        this.setState({
-          lends
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const data = await approveBorrow(body);
+      if (!data) throw new Error("Unable to approve borrow");
+      const lend = data.lend;
+      const user = data.lender;
+      const lends = [...this.state.lends];
+      const index = lends.findIndex((element) => element._id === lend._id);
+      lends[index] = lend;
+      this.props.handleUserUpdate(user);
+      this.setState({ lends });
+    } catch (error) {
+      this.setState({ error });
+    }
   };
 
-  handleEndSubmit = (event, id) => {
+  handleEndSubmit = async (event, id) => {
     event.preventDefault();
     const body = {
       id
     };
-    endBorrow(body)
-      .then((data) => {
-        const lends = [...this.state.lends];
-        const index = lends.findIndex((element) => element._id === data.lend._id);
-        lends.splice(index);
-        this.setState({
-          lends
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const data = await endBorrow(body);
+      if (!data) throw new Error("Unable to end borrow");
+      const lends = [...this.state.lends];
+      const index = lends.findIndex((element) => element._id === data.lend._id);
+      lends.splice(index);
+      this.setState({ lends });
+    } catch (error) {
+      this.setState({ error });
+    }
+  };
+
+  handleClearError = () => {
+    this.setState({ error: null });
   };
 
   render() {
@@ -109,6 +111,13 @@ class MyBorrowsView extends Component {
             )}
           </div>
         </div>
+        {this.state.error && (
+          <ErrorMessage
+            classToAdd="error-center"
+            message={this.state.error.message}
+            handleClearError={this.handleClearError}
+          />
+        )}
       </main>
     );
   }

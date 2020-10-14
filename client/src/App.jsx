@@ -9,7 +9,7 @@ import SignUpView from "./views/auth/SignUpView";
 import MyThingsView from "./views/profile/MyThingsView";
 import MyBorrowsView from "./views/profile/MyBorrowsView";
 import MyHistoryView from "./views/profile/MyHistoryView";
-import ProfileView from "./views/profile/ProfileView";
+import MyProfileView from "./views/profile/MyProfileView";
 import SearchThingsView from "./views/things/SearchThingsView";
 import CreateThingView from "./views/things/CreateThingView";
 import EditThingView from "./views/things/EditThingView";
@@ -58,38 +58,29 @@ class App extends Component {
       });
   }
 
-  handleSignOut = () => {
-    signOut()
-      .then(() => {
-        this.handleUserUpdate(null);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  handleSignOut = async () => {
+    try {
+      const data = await signOut();
+      if (data.signedOut) this.handleUserUpdate(null);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   handleUserUpdate = (user) => {
-    this.setState({
-      user
-    });
+    this.setState({ user });
   };
 
   handleLocationUpdate = (location) => {
-    this.setState({
-      location
-    });
+    this.setState({ location });
   };
 
   handleCoordinatesUpdate = (coordinates) => {
-    this.setState({
-      coordinates
-    });
+    this.setState({ coordinates });
   };
 
   handleCategoryUpdate = (category) => {
-    this.setState({
-      category
-    });
+    this.setState({ category });
   };
 
   render() {
@@ -174,7 +165,7 @@ class App extends Component {
               <ProtectedRoute
                 path="/profile"
                 render={(props) => (
-                  <ProfileView {...props} user={this.state.user} handleUserUpdate={this.handleUserUpdate} />
+                  <MyProfileView {...props} user={this.state.user} handleUserUpdate={this.handleUserUpdate} />
                 )}
                 authorized={this.state.user}
                 redirect="/auth/sign-in"

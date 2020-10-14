@@ -12,6 +12,10 @@
 
 /* specific styles for views with map */
 
+#category-form-group {
+  width: 50%;
+}
+
 #edit-img {
   margin: 1rem 0;
   border-radius: 10px;

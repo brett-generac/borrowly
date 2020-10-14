@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "../MapView.css";
 import Map from "../../components/Map/Map";
+import ErrorMessage from "../../components/ErrorMessage";
 import { createThing } from "../../services/thing";
 
 class CreateThingView extends Component {
@@ -18,57 +19,38 @@ class CreateThingView extends Component {
 
   handleInputChange = (event) => {
     const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
+    this.setState({ [name]: value });
   };
 
   handlePhotoChange = (event) => {
     const photo = event.target.files[0];
-    this.setState({
-      photo
-    });
+    this.setState({ photo });
   };
 
   handleMapClick = (eventLatLng) => {
     const lng = eventLatLng.lng();
     const lat = eventLatLng.lat();
     const coordinates = [lng, lat];
-    this.setState({
-      coordinates
-    });
+    this.setState({ coordinates });
   };
 
-  handleFormSubmit = (event) => {
+  handleFormSubmit = async (event) => {
     event.preventDefault();
     const { category, name, description, photo, coordinates } = this.state;
     const body = { category, name, description, photo, coordinates };
     const hasRequired = Object.keys(body).every((property) => body[property]);
-    if (hasRequired) {
-      createThing(body)
-        .then((data) => {
-          const id = data.thing._id;
-          this.props.history.push(`/things/${id}`);
-        })
-        .catch((error) => {
-          console.log(error);
-          this.setState({
-            error
-          });
-        });
-    } else {
-      const error = new Error("All fields are required");
-      this.setState({
-        error
-      });
+    try {
+      if (!hasRequired) throw new Error("All fields are required");
+      const data = await createThing(body);
+      const id = data.thing._id;
+      this.props.history.push(`/things/${id}`);
+    } catch (error) {
+      this.setState({ error });
     }
   };
 
-  handleClearError = (event) => {
-    event.preventDefault();
-    this.setState({
-      error: null
-    });
+  handleClearError = () => {
+    this.setState({ error: null });
   };
 
   render() {
@@ -81,7 +63,7 @@ class CreateThingView extends Component {
                 Let folks borrow your unused <span className="orange">thing</span>
               </h3>
               <hr className="thick" />
-              <div className="form-group">
+              <div id="category-form-group" className="form-group">
                 <label htmlFor="category-select">Category</label>
                 <select
                   className="form-control"
@@ -133,7 +115,7 @@ class CreateThingView extends Component {
                   onChange={this.handleInputChange}
                 />
               </div>
-              <h5 className="orange">Click a spot on the map where folks can pick-up the thing</h5>
+              <h5 className="orange">Click the spot on the map where folks can pick-up your thing</h5>
               <div className="form-group">
                 <label htmlFor="photo-input">Upload a photo</label>
                 <input
@@ -147,18 +129,11 @@ class CreateThingView extends Component {
               <button className="btn btn-primary">Contribute</button>
             </form>
             {this.state.error && (
-              <div className="error-side alert alert-danger alert-dismissible fade show" role="alert">
-                {this.state.error.message}
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="alert"
-                  aria-label="Close"
-                  onClick={this.handleClearError}
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
+              <ErrorMessage
+                classToAdd="error-side"
+                message={this.state.error.message}
+                handleClearError={this.handleClearError}
+              />
             )}
           </div>
           <Map view="create" center={this.props.coordinates} handleMapClick={this.handleMapClick} />

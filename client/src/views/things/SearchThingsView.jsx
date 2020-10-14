@@ -4,6 +4,9 @@ import Map from "../../components/Map/Map";
 import SearchList from "../../components/Lists/SearchList";
 import { loadThings } from "../../services/thing";
 
+//app gets user coordinates/location when mounted but if you type things/list
+// and don't use btn to get here, server crashes
+
 export class SearchThings extends Component {
   constructor() {
     super();

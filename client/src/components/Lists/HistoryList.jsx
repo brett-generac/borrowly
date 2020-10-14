@@ -31,7 +31,7 @@ const HistoryList = (props) => {
         </>
       )) || (
         <div className="no-data">
-          <h3>Looks like you haven't borrowed anything</h3>
+          <h3>You haven't borrowed anything</h3>
           <h3>
             <Link to="/">Discover</Link> what folks have up for grabs
           </h3>
