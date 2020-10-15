@@ -65,7 +65,7 @@ class MyProfileView extends Component {
           <div className="row">
             <div className="col-9">
               <h3>
-                You have <b>{this.props.user.favors}</b> <span className="orange">{favors}</span> to ask.
+                You have {this.props.user.favors} <span className="orange">{favors}</span> to ask.
               </h3>
             </div>
             <div className="col-3">

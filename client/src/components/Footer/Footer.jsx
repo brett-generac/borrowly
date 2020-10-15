@@ -10,9 +10,10 @@ const Footer = (props) => {
           <div id="footer-about" className="col-sm-12 col-md-8">
             <h6>About</h6>
             <p>
-              I'm an unemployed web developer. I worked my patootie off making this thing perfect so that you realize
-              how brilliant I am and hire me. Or maybe you're actually using it, great! But I hope not too many people
-              use it or I'll have to pay Google real cash money.
+              I'm an unemployed web developer. I worked my patootie off making this thing perfect so that you'll realize
+              how brilliant I am and hire me. Also, <span className="orange">borrowly</span> is fully functional and can
+              be as real as people make it, if you're feeling generous why not make an account and post something that
+              people can borrow?
             </p>
           </div>
           <div className="col-xs-6 col-md-2">

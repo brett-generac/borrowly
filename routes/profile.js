@@ -4,7 +4,6 @@ const express = require("express");
 const bcryptjs = require("bcryptjs");
 const User = require("../models/user");
 const routeGuard = require("../middleware/route-guard");
-const { NotExtended } = require("http-errors");
 
 const profileRouter = new express.Router();
 
@@ -18,7 +17,7 @@ profileRouter.patch("/me", routeGuard, async (req, res, next) => {
   if (password) {
     try {
       const hash = await bcryptjs.hash(req.body.password, 10);
-      const user = await User.findByIdAndUpdate(req.user._id, { passwordHash: hash });
+      await User.findByIdAndUpdate(req.user._id, { passwordHash: hash });
     } catch (error) {
       next(error);
     }

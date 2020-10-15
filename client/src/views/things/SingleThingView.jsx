@@ -44,9 +44,10 @@ class SingleThingView extends Component {
     event.preventDefault();
     const body = {
       lender: this.state.thing.owner._id,
-      thing: this.state.thing._id
+      thing: this.state.thing
     };
     try {
+      if (this.props.user.favors < 1) throw new Error("You need a favor in order to borrow things");
       const data = await createBorrow(body);
       if (!data.created) throw new Error("Unable to ask to borrow");
       this.props.history.push("/profile");

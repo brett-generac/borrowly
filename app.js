@@ -9,7 +9,7 @@ const cors = require("cors");
 const createError = require("http-errors");
 const logger = require("morgan");
 const serveFavicon = require("serve-favicon");
-const basicAuthenticationDeserializer = require("./middleware/basic-authentication-deserializer.js");
+const userDeserializer = require("./middleware/user-deserializer.js");
 
 const indexRouter = require("./routes/index");
 const authRouter = require("./routes/auth");
@@ -48,7 +48,7 @@ app.use(
     })
   })
 );
-app.use(basicAuthenticationDeserializer);
+app.use(userDeserializer);
 
 app.use("/", indexRouter);
 app.use("/auth", authRouter);

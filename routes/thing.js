@@ -24,12 +24,12 @@ thingRouter.get("/my", routeGuard, async (req, res, next) => {
 });
 
 thingRouter.get("/list", async (req, res, next) => {
-  const { coordinates, category } = req.query;
-  const lng = coordinates[0];
-  const lat = coordinates[1];
-  let categoryObject = {};
-  if (category) categoryObject = { category };
   try {
+    const { coordinates, category } = req.query;
+    const lng = coordinates[0];
+    const lat = coordinates[1];
+    let categoryObject = {};
+    if (category) categoryObject = { category };
     const things = await Thing.find({
       location: {
         $near: {
