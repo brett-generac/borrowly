@@ -2,7 +2,7 @@ import React from "react";
 import "./Footer.css";
 import logo from "../../images/logo.png";
 
-const Footer = (props) => {
+const Footer = () => {
   return (
     <footer className="site-footer">
       <div className="container">
@@ -11,9 +11,8 @@ const Footer = (props) => {
             <h6>About</h6>
             <p>
               I'm an unemployed web developer. I worked my patootie off making this thing perfect so that you'll realize
-              how brilliant I am and hire me. Also, <span className="orange">borrowly</span> is fully functional and can
-              be as real as people make it, if you're feeling generous why not make an account and post something that
-              people can borrow?
+              how brilliant I am and hire me. Also, borrowly is fully functional and can be as real as people make it,
+              if you're feeling generous why not make an account and post something that you'd let people borrow?
             </p>
           </div>
           <div className="col-xs-6 col-md-2">

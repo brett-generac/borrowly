@@ -1,6 +1,6 @@
 # Borrowly
 
-Peer-to-peer app for borrowing/lending things, build with MERN stack. Client side single-page app uses
+Peer-to-peer app for borrowing/lending things, built with MERN stack. Client side single-page app uses
 react-router-dom for rendering views and axios for sending requests. REST API configured with Express, routes respond with JSON data retrieved from MongoDB. Google maps JavaScript API (no intermediary packages) used for interactive map instances and geocoding. Best practices used for component lifecycles, managing state, and graceful error handling.
 
 Views (react-router-dom routes)
@@ -102,7 +102,5 @@ closed: {
 To-Do List:
 
 - Edge cases that I've noted in comments
-- nodemailer for sign-up/borrow requests
 - Responsive design/mobile styling
 - Map height issue
-- First/last name fields

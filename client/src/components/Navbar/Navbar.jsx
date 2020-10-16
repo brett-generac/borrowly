@@ -34,7 +34,7 @@ const Navbar = (props) => {
                   Contribute
                 </Link>
               </li>
-              <li className="nav-item dropdown">
+              <li className="nav-item dropdown d-none d-md-block">
                 <button
                   className="btn btn-secondary dropdown-toggle"
                   id="navbarDropdown"
@@ -63,10 +63,40 @@ const Navbar = (props) => {
                   </button>
                 </div>
               </li>
-              <li id="nav-item-favors" className="nav-item">
+              <li id="nav-item-favors" className="nav-item d-none d-md-block">
                 <small>
                   {props.user.favors} {favors}
                 </small>
+              </li>
+              <li className="nav-item d-md-none">
+                <Link className="nav-link" to="/profile/borrows">
+                  Borrows
+                </Link>
+              </li>
+              <li className="nav-item d-md-none">
+                <Link className="nav-link" to="/profile/things">
+                  Things
+                </Link>
+              </li>
+              <li className="nav-item d-md-none">
+                <Link className="nav-link" to="/profile/history">
+                  History
+                </Link>
+              </li>
+              <li className="nav-item d-md-none">
+                <Link className="nav-link" to="/profile">
+                  Profile
+                </Link>
+              </li>
+              <li id="nav-item-favors" className="nav-item d-md-none">
+                <small>
+                  {props.user.favors} {favors}
+                </small>
+              </li>
+              <li id="nav-item-sign-out" className="nav-item d-md-none">
+                <button className="btn btn-secondary" onClick={props.handleSignOut}>
+                  Sign Out
+                </button>
               </li>
             </>
           )) || (

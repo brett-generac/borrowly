@@ -28,9 +28,9 @@ export class SearchThings extends Component {
 
   render() {
     return (
-      <main className="map-main">
+      <main>
         {(this.state.loaded && (
-          <div className="map-view">
+          <div>
             <div className="left">
               <SearchList
                 user={this.props.user}
@@ -39,6 +39,7 @@ export class SearchThings extends Component {
                 things={this.state.things}
               />
             </div>
+            <Map view="search" center={this.props.coordinates} markers={this.state.things} />
           </div>
         )) || (
           <div>
@@ -48,7 +49,6 @@ export class SearchThings extends Component {
             <div className="map-loading"></div>
           </div>
         )}
-        <Map view="search" center={this.props.coordinates} markers={this.state.things} />
       </main>
     );
   }
