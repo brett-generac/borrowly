@@ -79,26 +79,25 @@ borrowRouter.post("/create", async (req, res, next) => {
 });
 
 borrowRouter.patch("/approve", async (req, res, next) => {
-  //this route can be improved, await each update and then send only the populated "lend" back
-  //need more data from front end to do so, so I'm not grabbing data from lend.
+  //commented out nodemailer b/c it seems to be breaking deployed app
+  //works fine locally
+  const { lend } = req.body;
   try {
-    const borrowId = req.body.id;
-    const lend = await Borrow.findByIdAndUpdate(borrowId, { active: true }, { new: true })
+    await User.findByIdAndUpdate(req.user._id, { $inc: { favors: 1 } }, { new: true });
+    await User.findByIdAndUpdate(lend.borrower._id, { $inc: { favors: -1 } });
+    await Thing.findByIdAndUpdate(lend.thing._id, { available: false });
+    const updatedLend = await Borrow.findByIdAndUpdate(lend._id, { active: true }, { new: true })
       .populate("lender", "-passwordHash")
       .populate("borrower", "-passwordHash")
       .populate("thing");
-    const lender = await User.findByIdAndUpdate(req.user._id, { $inc: { favors: 1 } }, { new: true });
-    const thingId = lend.thing._id;
-    const borrowerId = lend.borrower._id;
-    const borrower = await User.findByIdAndUpdate(borrowerId, { $inc: { favors: -1 } });
-    Thing.findByIdAndUpdate(thingId, { available: false });
-    transport.sendMail({
-      from: process.env.NODEMAILER_EMAIL,
-      to: borrower.email,
-      subject: "Your borrow was approved - a message from borrowly",
-      text: `${req.user.name} approved your borrow of ${lend.thing.name}, contact them at ${req.user.email} to arrange pickup.`
-    });
-    res.json({ lend, lender });
+    // transport
+    //   .sendMail({
+    //     from: process.env.NODEMAILER_EMAIL,
+    //     to: lend.borrower.email,
+    //     subject: "Your borrow was approved - a message from borrowly",
+    //     text: `${req.user.name} approved your borrow of ${lend.thing.name}, contact them at ${req.user.email} to arrange pickup.`
+    //   })
+    res.json({ updatedLend });
   } catch (error) {
     next(error);
   }

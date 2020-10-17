@@ -35,18 +35,16 @@ class MyBorrowsView extends Component {
 
   handleApproveSubmit = async (event, id) => {
     event.preventDefault();
-    const body = {
-      id
-    };
+    const lends = [...this.state.lends];
+    const index = lends.findIndex((lend) => lend._id === id);
+    const lend = lends[index];
+    const body = { lend };
     try {
       const data = await approveBorrow(body);
       if (!data) throw new Error("Unable to approve borrow");
-      const lend = data.lend;
-      const user = data.lender;
-      const lends = [...this.state.lends];
-      const index = lends.findIndex((element) => element._id === lend._id);
-      lends[index] = lend;
-      this.props.handleUserUpdate(user);
+      const { updatedLend } = data;
+      lends[index] = updatedLend;
+      this.props.handleUserUpdate(updatedLend.lender);
       this.setState({ lends });
     } catch (error) {
       this.setState({ error });
@@ -55,15 +53,13 @@ class MyBorrowsView extends Component {
 
   handleEndSubmit = async (event, id) => {
     event.preventDefault();
-    const body = {
-      id
-    };
+    const body = { id };
     try {
       const data = await endBorrow(body);
       if (!data) throw new Error("Unable to end borrow");
       const lends = [...this.state.lends];
       const index = lends.findIndex((element) => element._id === data.lend._id);
-      lends.splice(index);
+      lends.splice(index, 1);
       this.setState({ lends });
     } catch (error) {
       this.setState({ error });

@@ -1,5 +1,6 @@
 import React from "react";
 import "./List.css";
+import defaultThing from "../../images/default_thing.jpg";
 import { Link } from "react-router-dom";
 
 const HistoryList = (props) => {
@@ -15,9 +16,13 @@ const HistoryList = (props) => {
               <li key={borrow._id}>
                 <hr />
                 <div className="card">
-                  <img src={borrow.thing.photoUrl} className="card-img-top" alt={borrow.thing.name} />
+                  {(borrow.thing && (
+                    <img src={borrow.thing.photoUrl} className="card-img-top" alt={borrow.thing.name} />
+                  )) || <img src={defaultThing} alt="the word thing" />}
                   <div className="card-body">
-                    <h5 className="card-title">{borrow.thing.name}</h5>
+                    {(borrow.thing && <h5 className="card-title">{borrow.thing.name}</h5>) || (
+                      <h5 className="card-title">A Thing</h5>
+                    )}
                     <p className="card-text">Borrowed from {borrow.lender.name}</p>
                     <p className="card-text">
                       Requested on {borrow.createdAt.replace(/\T[^T]+$/, "")} returned on{" "}
@@ -48,9 +53,13 @@ const HistoryList = (props) => {
               <li key={lend._id}>
                 <hr />
                 <div className="card">
-                  <img src={lend.thing.photoUrl} className="card-img-top" alt={lend.thing.name} />
+                  {(lend.thing && <img src={lend.thing.photoUrl} className="card-img-top" alt={lend.thing.name} />) || (
+                    <img src={defaultThing} alt="the word thing" />
+                  )}
                   <div className="card-body">
-                    <h5 className="card-title">{lend.thing.name}</h5>
+                    {(lend.thing && <h5 className="card-title">{lend.thing.name}</h5>) || (
+                      <h5 className="card-title">A Thing</h5>
+                    )}
                     <p className="card-text">Lended to {lend.borrower.name}</p>
                     <p className="card-text">
                       Requested on {lend.createdAt.replace(/\T[^T]+$/, "")} returned on{" "}
