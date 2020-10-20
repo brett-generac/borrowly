@@ -69,7 +69,9 @@ class SignInView extends Component {
                     onChange={this.handleInputChange}
                   />
                 </div>
-                <button className="btn btn-primary">Sign In</button>
+                <button className="btn btn-primary" type="submit">
+                  Sign In
+                </button>
               </form>
             </div>
           </div>

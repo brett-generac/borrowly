@@ -126,7 +126,9 @@ class CreateThingView extends Component {
                   onChange={this.handlePhotoChange}
                 />
               </div>
-              <button className="btn btn-primary">Contribute</button>
+              <button className="btn btn-primary" type="submit">
+                Contribute
+              </button>
             </form>
             {this.state.error && (
               <ErrorMessage

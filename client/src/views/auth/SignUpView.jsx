@@ -91,7 +91,9 @@ class SignUpView extends Component {
                     Show password
                   </label>
                 </div>
-                <button className="btn btn-primary">Sign Up</button>
+                <button className="btn btn-primary" type="submit">
+                  Sign Up
+                </button>
               </form>
             </div>
           </div>

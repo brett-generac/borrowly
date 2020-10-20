@@ -99,8 +99,9 @@ closed: {
 }
 ```
 
-To-Do List:
+Bugs:
 
-- Edge cases that I've noted in comments
-- Responsive design/mobile styling
-- Map height issue
+- mobile not loading data for some reason
+- mobile map views display bad
+- 404 page not showing with invalid route
+- approve route nodemailer crashes app (maybe)

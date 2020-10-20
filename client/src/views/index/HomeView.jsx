@@ -119,7 +119,9 @@ export class HomeView extends Component {
                   folks nearby have up for grabs.
                 </p>
                 <form onSubmit={this.handleNearbySubmit}>
-                  <button className="btn btn-primary">Nearby Things</button>
+                  <button className="btn btn-primary" type="submit">
+                    Nearby Things
+                  </button>
                 </form>
               </div>
             </div>
